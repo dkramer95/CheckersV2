@@ -59,20 +59,9 @@ namespace CheckersModel
             _gridSquares.Add(pos, square);
         }
 
-        public static void Populate(List<Piece> darkPieces, List<Piece> lightPieces)
+        public static void Populate()
         {
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Populates the board using the specified set of pieces, as well as the
-        /// initial starting location.
-        /// </summary>
-        /// <param name="pieceSet">Set of pieces to add to squares</param>
-        /// <param name="startCol">Starting horizontal location</param>
-        /// <param name="startRow">Starting vertical location</param>
-        private static void PopulateWithPieces(List<Piece> pieceSet, char startCol, int startRow)
-        {
         }
 
         public static string ToString()
