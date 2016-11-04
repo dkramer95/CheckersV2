@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Checkers.Model;
+using CheckersModel;
 
-namespace Checkers
+namespace Checkers.View
 {
     class TypeMenu
     {
@@ -50,13 +52,13 @@ namespace Checkers
             switch (num)
             {
                 case 1:
-                    List<Player> p = new List<Player>{ new HumanPlayer(), new HumanPlayer() };
+                    p = new List<Player>{ new HumanPlayer(), new HumanPlayer() };
                     break;
                 case 2:
-                    List<Player> p = new List<Player>{ new HumanPlayer(), new AIPlayer() };
+                    p = new List<Player>{ new HumanPlayer(), new AIPlayer() };
                     break;
                 case 3:
-                    List<Player> p = new List<Player>{ new AIPlayer(), new AIPlayer() };
+                    p = new List<Player>{ new AIPlayer(), new AIPlayer() };
                     break;
                 default:
                     Console.WriteLine("ERROR OUT OF GAME TYPE RANGE");

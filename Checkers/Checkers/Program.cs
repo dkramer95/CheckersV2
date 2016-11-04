@@ -11,6 +11,8 @@ namespace Checkers
         static void Main(string[] args)
         {
             Console.WriteLine("Checkers...");
+            Game g = new Game();
+            g.Start();
         }
     }
 }

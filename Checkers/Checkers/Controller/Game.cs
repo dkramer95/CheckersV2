@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CheckersModel;
+using Checkers.View;
 
 namespace Checkers.Controller
 {
@@ -21,7 +23,7 @@ namespace Checkers.Controller
             bool win = false;
             while (win)
             {
-                Move m = players[pturn].GetMove();
+                //Move m = players[pturn].GetMove();
                 if (pturn > players.Count)
                 {
                     pturn++;
