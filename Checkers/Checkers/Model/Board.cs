@@ -35,6 +35,12 @@ namespace CheckersModel
             return square;
         }
 
+        public static Square SquareAt(Position pos)
+        {
+            Square square = SquareAt(pos.Column, pos.Row);
+            return square;
+        }
+
         public static void Reset()
         {
             _gridSquares = new Dictionary<Position, Square>();
@@ -49,10 +55,6 @@ namespace CheckersModel
                     AddSquare(pos, square);
                 }
             }
-
-            // Populate with pieces in their initial starting layout.
-            Populate();
-            throw new NotImplementedException();
         }
 
         private static void AddSquare(Position pos, Square square)
@@ -60,9 +62,51 @@ namespace CheckersModel
             _gridSquares.Add(pos, square);
         }
 
-        public static void Populate()
+        /// <summary>
+        /// Populates the board with the pieces
+        /// </summary>
+        /// <param name="darkPieces">Dark pieces</param>
+        /// <param name="lightPieces">Light pieces</param>
+        public static void Populate(List<Piece> darkPieces, List<Piece> lightPieces)
         {
-            throw new NotImplementedException();
+            string[] darkPositions = new string[]
+            {
+                "B8", "D8", "F8", "H8",
+                "A7", "C7", "E7", "G7",
+                "B6", "D6", "F6", "H6",
+            };
+
+            string[] lightPositions = new string[]
+            {
+                "A3", "C3", "E3", "G3",
+                "B2", "D2", "F2", "H2",
+                "A1", "C1", "E1", "G1"
+            };
+
+            const int PIECE_COUNT = 12;
+
+            for (int j = 0; j < PIECE_COUNT; ++j)
+            {
+                // dark pieces
+                Piece darkPiece = darkPieces[j];
+                Position darkPos = PositionFromString(darkPositions[j]);
+                SquareAt(darkPos).AddPiece(darkPiece);
+
+
+                // light pieces
+                Piece lightPiece = lightPieces[j];
+                Position lightPos = PositionFromString(lightPositions[j]);
+                SquareAt(lightPos).AddPiece(lightPiece);
+            }
+        }
+
+        private static Position PositionFromString(string str)
+        {
+            char col = str[0];
+            int row = str[1];
+            Position pos = new Position(col, row);
+
+            return pos;
         }
 
         public static string ToString()
@@ -73,7 +117,7 @@ namespace CheckersModel
             for (int row = MAX_ROW; row >= MIN_ROW; --row)
             {
                 sb.Append(row + " ");
-                
+
                 // go through each col left to right 
                 for (char col = MIN_COL; col <= MAX_COL; ++col)
                 {
