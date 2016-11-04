@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +50,7 @@
     <Compile Include="Model\HumanPlayer.cs" />
     <Compile Include="Model\Piece.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\Position.cs" />
     <Compile Include="Model\Square.cs" />
     <Compile Include="View\ConsoleIO.cs" />
     <Compile Include="Controller\Game.cs" />
