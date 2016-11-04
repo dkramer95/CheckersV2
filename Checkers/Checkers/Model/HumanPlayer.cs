@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CheckersModel
+namespace Checkers.Model
 {
     public class HumanPlayer : Player
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CheckersModel
+namespace Checkers.Model
 {
     /// <summary>
     /// This class represents a Checkers board which is made up of an
