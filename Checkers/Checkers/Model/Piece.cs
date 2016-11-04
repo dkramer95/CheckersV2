@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace CheckersModel
+namespace Checkers.Model
 {
-    class Piece
+    public class Piece
     {
         public Color Color { get; set; }
         public char AsciiValue { get; set; }
@@ -15,7 +15,7 @@ namespace CheckersModel
         public int MyProperty { get; set; }
         public BitmapImage Image { get; set; }
 
-        private Piece()
+        public Piece()
         {
 
         }

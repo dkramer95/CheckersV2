@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CheckersModel
+namespace Checkers.Model
 {
     /// <summary>
     /// This class represents a single individual square. A square can

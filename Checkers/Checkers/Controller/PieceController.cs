@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Checkers.Model;
 
-namespace Checkers.Model
+namespace Checkers.Controller
 {
-    public enum Color
+    class PieceController
     {
-        Black,
-        Red
+        public List<Move> PossibleMoves { get; set; }
+
     }
 }
