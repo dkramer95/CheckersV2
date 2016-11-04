@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CheckersModel
 {
-    public enum Color
+    class Piece
     {
-        Black,
-        Red
+        public Color Color { get; set; }
+
     }
 }
