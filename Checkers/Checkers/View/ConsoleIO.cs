@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Checkers.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Checkers.View
 {
-    class ConsoleIO
+    public class ConsoleIO
     {
         public string Prompt()
         {
@@ -15,6 +16,16 @@ namespace Checkers.View
             string endpos = Postion("Please enter postion you want to move to");
             string s = startpos + endpos;
             return s;
+        }
+        public Move SelectMoveFromList(IEnumerable<Move> moves)
+        {
+            for (int j = 0; j < moves.Count(); ++j)
+            {
+                Console.WriteLine((j + 1) + ": " + moves.ElementAt(j).ToString());
+            }
+            int moveNum = PromptForInt("Enter the number of the move you want to make", 1, moves.Count());
+            Move move = moves.ElementAt(moveNum - 1);
+            return move;
         }
         public string Postion(string s)
         {
@@ -50,6 +61,24 @@ namespace Checkers.View
             int o;
             bool b = int.TryParse(i.ToString(), out o);
             return false;
+        }
+        private int PromptForInt(string message, int min, int max)
+        {
+            bool isValid = false;
+            int result = 0;
+
+            while (!isValid)
+            {
+                Console.WriteLine(message);
+                string input = Console.ReadLine();
+                isValid = int.TryParse(input, out result) && result >= min && result <= max;
+
+                if (!isValid)
+                {
+                    Console.WriteLine("You must enter a valid integer value between " + min + " and " + max);
+                }
+            }
+            return result;
         }
     }
 }

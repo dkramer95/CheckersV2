@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Checkers.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,9 @@ namespace Checkers.Model
     {
         public override Move GetMove(IEnumerable<Move> moves)
         {
-            throw new NotImplementedException();
+            ConsoleIO io = new ConsoleIO();
+            Move move = io.SelectMoveFromList(moves);
+            return move;
         }
-
-
     }
 }
