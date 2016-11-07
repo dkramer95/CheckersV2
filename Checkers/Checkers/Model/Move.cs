@@ -21,5 +21,15 @@ namespace Checkers.Model
             this.CapturedPieces = capturedPieces;
         }
 
+        public override string ToString()
+        {
+            string s = "Move piece at " + StartPosition + " to " + EndPosition;
+            if (CapturedPieces != null)
+            {
+                s += " and captures " + CapturedPieces.Count() + " piece(s)";                
+            }
+            return s;
+        }
+
     }
 }
