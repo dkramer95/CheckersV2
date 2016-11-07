@@ -9,6 +9,7 @@ namespace Checkers.Model
     public class Move
     {
         public Piece Piece { get; set; }
+        public Position StartPosition { get; set; }
         public Position EndPosition { get; set; }
         public List<Piece> CapturedPieces { get; set; }
 
