@@ -10,7 +10,7 @@ namespace Checkers.Model
 {
     public class HumanPlayer : Player
     {
-        public override Move GetMove(IEnumerable<Move> moves)
+        public override Move GetMove(List<Move> moves)
         {
             ViewControler v = new ViewControler();
             Move move = v.validate(moves);
