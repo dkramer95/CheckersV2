@@ -23,6 +23,7 @@ namespace Checkers.Model
         {
             Piece piece = CreatePiece();
             piece.Color = color;
+            piece.AsciiValue = color.ToString()[0];
             return piece;
         }
 

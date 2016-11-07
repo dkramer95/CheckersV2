@@ -25,14 +25,20 @@ namespace Checkers.Model
         public static readonly int MAX_ROW = 8;
 
         // 8 x 8 Grid of Squares
-        public static IDictionary<Position, Square> GridSquares { get; private set; }
+        public static Dictionary<Position, Square> GridSquares { get; private set; }
 
 
         public static Square SquareAt(char col, int row)
         {
-            Position pos = new Position(col, row);
+            Position pos = GetKey(col, row);
             Square square = GridSquares[pos];
             return square;
+        }
+
+        private static Position GetKey(char col, int row)
+        {
+            Position key = GridSquares.Keys.Where(k => (k.Column == col) && (k.Row == row)).Single();
+            return key;
         }
 
         public static Square SquareAt(Position pos)
@@ -69,6 +75,9 @@ namespace Checkers.Model
         /// <param name="lightPieces">Light pieces</param>
         public static void Populate(List<Piece> darkPieces, List<Piece> lightPieces)
         {
+            darkPieces.Clear();
+            lightPieces.Clear();
+
             string[] darkPositions = new string[]
             {
                 "B8", "D8", "F8", "H8",
@@ -88,22 +97,24 @@ namespace Checkers.Model
             for (int j = 0; j < PIECE_COUNT; ++j)
             {
                 // dark pieces
-                Piece darkPiece = darkPieces[j];
+                Piece darkPiece = Piece.CreatePiece(Color.Black);
                 Position darkPos = PositionFromString(darkPositions[j]);
                 SquareAt(darkPos).AddPiece(darkPiece);
+                darkPieces.Add(darkPiece);
 
 
                 // light pieces
-                Piece lightPiece = lightPieces[j];
+                Piece lightPiece = Piece.CreatePiece(Color.Red);
                 Position lightPos = PositionFromString(lightPositions[j]);
                 SquareAt(lightPos).AddPiece(lightPiece);
+                lightPieces.Add(lightPiece);
             }
         }
 
         private static Position PositionFromString(string str)
         {
             char col = str[0];
-            int row = str[1];
+            int row = int.Parse(str[1].ToString());
             Position pos = new Position(col, row);
 
             return pos;
@@ -125,13 +136,13 @@ namespace Checkers.Model
                     Square square = SquareAt(pos);
 
                     // print piece if exists, otherwise empty space
-                    string squareStr = square.HasPiece() ? "[" + square.Piece + "]" : "[ ]";
+                    string squareStr = square.HasPiece() ? "[" + square.Piece.AsciiValue + "]" : "[ ]";
                     sb.Append(squareStr);
                 }
                 sb.Append("\n");
             }
             // Horizontal label
-            sb.Append(GetColLabels().PadLeft(3));
+            sb.Append("   " + GetColLabels());
             return sb.ToString();
         }
 
@@ -145,7 +156,7 @@ namespace Checkers.Model
 
             for (char col = MIN_COL; col <= MAX_COL; ++col)
             {
-                colLabel += col + " ";
+                colLabel += col + "  ";
             }
             return colLabel;
         }

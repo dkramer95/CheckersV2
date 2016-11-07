@@ -16,5 +16,12 @@ namespace Checkers.Model
             this.Column = column;
             this.Row = row;
         }
+
+        public override bool Equals(object obj)
+        {
+            Position other = obj as Position;
+            bool isEqual = (Column == other.Column) && (Row == other.Row);
+            return isEqual;
+        }
     }
 }
