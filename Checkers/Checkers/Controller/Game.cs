@@ -17,9 +17,6 @@ namespace Checkers.Controller
             players = types.Type();
             Board.Reset();
             Board.Populate(players[0].Pieces, players[1].Pieces);
-            // testing
-            Console.WriteLine(Board.ToString());
-
             GamePlay();
         }
         private void GamePlay()

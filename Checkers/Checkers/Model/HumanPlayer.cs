@@ -12,10 +12,9 @@ namespace Checkers.Model
     {
         public override Move GetMove(List<Move> moves)
         {
-            //ViewControler v = new ViewControler();
-            //Move move = v.validate(moves);
-            //return move;
-            return null;
+            ViewControler v = new ViewControler();
+            Move move = v.validate(moves);
+            return move;
         }
     }
 }

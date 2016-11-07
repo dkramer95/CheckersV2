@@ -37,14 +37,21 @@ namespace Checkers.View
             {
                 Console.WriteLine(s);
                 string pos = Console.ReadLine();
-                if (CheckLetter(pos[0]) && CheckInt(pos[1]))
+                if (pos.Length != 2)
                 {
-                    p = pos;
-                    valid = true;
+                    Console.WriteLine("INVALID INPUT NOT RIGHT LENGTH");
                 }
                 else
                 {
-                    Console.WriteLine("INVALID INPUT USE STYLE LETERNUM ");
+                    if (CheckLetter(pos[0]) && CheckInt(pos[1]))
+                    {
+                        p = pos;
+                        valid = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("INVALID INPUT USE STYLE LETERNUM ");
+                    }
                 }
             }
             return p;
@@ -62,7 +69,7 @@ namespace Checkers.View
         {
             int o;
             bool b = int.TryParse(i.ToString(), out o);
-            return false;
+            return b;
         }
         private int PromptForInt(string message, int min, int max)
         {
