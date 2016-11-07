@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Checkers.Model;
 
 namespace Checkers.View
 {
@@ -11,10 +12,11 @@ namespace Checkers.View
     {
         public string Prompt()
         {
+            Console.WriteLine(Board.ToString());
             Console.WriteLine("Please enter postions in the following format l=leter n=whole number ln");
             string startpos = Postion("Please enter postion you want to move");
             string endpos = Postion("Please enter postion you want to move to");
-            string s = startpos + endpos;
+            string s = startpos +","+ endpos;
             return s;
         }
         public Move SelectMoveFromList(IEnumerable<Move> moves)
@@ -31,7 +33,7 @@ namespace Checkers.View
         {
             string p = "";
             bool valid = false;
-            while (valid)
+            while (!valid)
             {
                 Console.WriteLine(s);
                 string pos = Console.ReadLine();
