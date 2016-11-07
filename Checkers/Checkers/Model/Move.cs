@@ -13,11 +13,12 @@ namespace Checkers.Model
         public Position EndPosition { get; set; }
         public List<Piece> CapturedPieces { get; set; }
 
-        public Move(Piece piece, Position endPosition, List<Piece> capturedPieces)
+        public Move(Piece piece, Position  startPosition, Position endPosition, List<Piece> capturedPieces)
         {
             this.Piece = piece;
-            this.EndPosition = EndPosition;
-            this.CapturedPieces = CapturedPieces;
+            this.StartPosition = startPosition;
+            this.EndPosition = endPosition;
+            this.CapturedPieces = capturedPieces;
         }
 
     }
