@@ -11,5 +11,14 @@ namespace Checkers.Controller
     {
         public List<Move> PossibleMoves { get; set; }
 
+        public bool KingPiece(Piece piece)
+        {
+            if (!piece.IsKing)
+            {
+                piece.IsKing = true;
+                return true;
+            }
+            return false;
+        }
     }
 }
