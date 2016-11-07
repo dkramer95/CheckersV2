@@ -20,5 +20,10 @@ namespace Checkers.Controller
             }
             return false;
         }
+
+        public List<Piece> GetPiecesThatCanMove()
+        {
+            return null;
+        }
     }
 }
