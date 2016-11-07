@@ -25,13 +25,13 @@ namespace Checkers.Model
         public static readonly int MAX_ROW = 8;
 
         // 8 x 8 Grid of Squares
-        private static IDictionary<Position, Square> _gridSquares;
+        public static IDictionary<Position, Square> GridSquares { get; private set; }
 
 
         public static Square SquareAt(char col, int row)
         {
             Position pos = new Position(col, row);
-            Square square = _gridSquares[pos];
+            Square square = GridSquares[pos];
             return square;
         }
 
@@ -43,7 +43,7 @@ namespace Checkers.Model
 
         public static void Reset()
         {
-            _gridSquares = new Dictionary<Position, Square>();
+            GridSquares = new Dictionary<Position, Square>();
 
             // Create all the individual squares
             for (char col = MIN_COL; col <= MAX_COL; ++col)
@@ -59,7 +59,7 @@ namespace Checkers.Model
 
         private static void AddSquare(Position pos, Square square)
         {
-            _gridSquares.Add(pos, square);
+            GridSquares.Add(pos, square);
         }
 
         /// <summary>
