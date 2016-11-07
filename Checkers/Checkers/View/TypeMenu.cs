@@ -27,7 +27,7 @@ namespace Checkers.View
                 string pos = Console.ReadLine();
                 if (int.TryParse(pos, out t))
                 {
-                    if (t > max || t < min)
+                    if (t <= max && t >= min)
                     {
                         valid = true;
                     }

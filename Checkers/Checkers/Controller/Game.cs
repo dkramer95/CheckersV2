@@ -16,16 +16,18 @@ namespace Checkers.Controller
         {
             TypeMenu types = new TypeMenu();
             players = types.Type();
+            Board.Reset();
+            Board.Populate(players[0].Pieces.ToList(), players[1].Pieces.ToList());
             GamePlay();
         }
         private void GamePlay()
         {
-            PieceController p = new PieceController();
-            List<Move> moves = p.PossibleMoves;
+            PieceController p = new PieceController();           
             int pturn = 0;
             bool win = false;
-            while (win)
+            while (!win)
             {
+                List<Move> moves = p.PossibleMoves;
                 Move m = players[pturn].GetMove(moves);
                 if (pturn > players.Count)
                 {

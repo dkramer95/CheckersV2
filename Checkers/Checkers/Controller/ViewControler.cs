@@ -9,10 +9,11 @@ namespace Checkers.Controller
 {
     class ViewControler
     {
-        public void validate(List<Move> PossibleMoves)
+        public Move validate(IEnumerable<Move> PossibleMoves)
         {
             bool valid = false;
             ConsoleIO view = new ConsoleIO();
+            Move realmove = new Move(null,null,null,null);
             while(!valid){
                 String move=view.Prompt();
                 String[] moves = move.Split(',');
@@ -21,6 +22,7 @@ namespace Checkers.Controller
                     if (m.StartPosition.Column==moves[0][0]&& m.StartPosition.Row == int.Parse(moves[0][1].ToString())&&
                     m.EndPosition.Column==moves[1][0]&& m.EndPosition.Row == int.Parse(moves[1][1].ToString()))
                     {
+                        realmove = m;
                         valid = true;
                     }
                 }
@@ -30,6 +32,7 @@ namespace Checkers.Controller
                 }
                     
             }
+            return realmove;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Checkers.Controller;
 
 namespace Checkers.Model
 {
@@ -11,8 +12,8 @@ namespace Checkers.Model
     {
         public override Move GetMove(IEnumerable<Move> moves)
         {
-            ConsoleIO io = new ConsoleIO();
-            Move move = io.SelectMoveFromList(moves);
+            ViewControler v = new ViewControler();
+            Move move = v.validate(moves);
             return move;
         }
     }
