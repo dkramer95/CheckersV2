@@ -17,14 +17,13 @@ namespace Checkers.Model
 
         public bool AddPiece(Piece piece)
         {
-            if (HasPiece())
-            {
-                // Cannot occupy this Square because we haven't removed
-                // an existing piece already
-            } else
+            bool didAdd = false;
+            if (!HasPiece())
             {
                 Piece = piece;
+                didAdd = true;
             }
+            return didAdd;
         }
 
         public bool HasPiece()
