@@ -11,7 +11,8 @@ namespace Checkers.Model
         Random rnd = new Random();
         public override Move GetMove(IEnumerable<Move> moves)
         {
-            throw new NotImplementedException();
+            Move randMove = moves.ElementAt(rnd.Next(0, moves.Count()));
+            return randMove;
         }
 
     }
