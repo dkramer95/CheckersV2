@@ -21,9 +21,31 @@ namespace Checkers.Controller
             return false;
         }
 
-        public List<Piece> GetPiecesThatCanMove()
+        public List<Piece> GetPiecesThatCanMove(Player p)
         {
-            return null;
+            List<Piece> foundPieces = new List<Piece>();
+            foreach (Piece piece in p.Pieces)
+            {
+                if (PossibleMoves.Where(s => s.Piece == piece).Count() > 0)
+                {
+                    foundPieces.Add(piece);
+                }
+            }
+            return foundPieces;
+        }
+
+        public List<Piece> GetPiecesThatCanJump(Player p)
+        {
+            List<Piece> foundPieces = GetPiecesThatCanMove(p);
+            List<Piece> piecesThatCanJump = new List<Piece>();
+            foreach (Piece piece in foundPieces)
+            {
+                if (PossibleMoves.Where(s => s.CapturedPieces.Count() > 0).Count() > 0)
+                {
+                    piecesThatCanJump.Add(piece);
+                }
+            }
+            return piecesThatCanJump;
         }
     }
 }

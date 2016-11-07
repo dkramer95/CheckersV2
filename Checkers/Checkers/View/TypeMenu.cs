@@ -21,7 +21,7 @@ namespace Checkers.View
         {
             int t = 0;
             bool valid = false;
-            while (valid)
+            while (!valid)
             {
                 Console.WriteLine(prompt);
                 string pos = Console.ReadLine();
