@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Checkers.Model;
 using Checkers.View;
+using Checkers.Model;
 
 namespace Checkers.Controller
 {
