@@ -10,7 +10,7 @@ namespace Checkers.Model
     {
         public Color PiecesColor { get; set; }
 
-        public Move GetMove(IEnumerable<Move> moves);
+        abstract public Move GetMove(IEnumerable<Move> moves);
 
 
     }

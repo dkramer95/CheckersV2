@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CheckersModel;
+using Checkers.Model;
 using Checkers.View;
 
 namespace Checkers.Controller
@@ -19,11 +19,13 @@ namespace Checkers.Controller
         }
         private void GamePlay()
         {
+            PieceController p = new PieceController();
+            List<Move> moves = p.PossibleMoves;
             int pturn = 0;
             bool win = false;
             while (win)
             {
-                //Move m = players[pturn].GetMove();
+                Move m = players[pturn].GetMove(moves);
                 if (pturn > players.Count)
                 {
                     pturn++;
@@ -33,6 +35,12 @@ namespace Checkers.Controller
                     pturn = 0;
                 }
             }
+        }
+        private void MovePiece(Move m)
+        {
+            Piece p=Board.SquareAt(m.StartPosition.Column, m.StartPosition.Column).Piece;
+            Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).AddPiece(p);
+            Board.SquareAt(m.StartPosition.Column, m.StartPosition.Column).RemovePiece();
         }
     }
 }
