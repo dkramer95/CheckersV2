@@ -15,11 +15,6 @@ namespace Checkers.Model
         public int MyProperty { get; set; }
         public BitmapImage Image { get; set; }
 
-        public Piece()
-        {
-
-        }
-
         public static Piece CreatePiece()
         {
             return new Piece();

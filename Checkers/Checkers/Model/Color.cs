@@ -8,7 +8,6 @@ namespace Checkers.Model
 {
     public enum Color
     {
-        Black,
-        Red
+        Red, Black
     }
 }
