@@ -16,7 +16,10 @@ namespace Checkers.Controller
             TypeMenu types = new TypeMenu();
             players = types.Type();
             Board.Reset();
-            Board.Populate(players[0].Pieces.ToList(), players[1].Pieces.ToList());
+            Board.Populate(players[0].Pieces, players[1].Pieces);
+            // testing
+            Console.WriteLine(Board.ToString());
+
             GamePlay();
         }
         private void GamePlay()
