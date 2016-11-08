@@ -50,6 +50,7 @@ namespace Checkers.Controller
                 Console.WriteLine(players[pturn].PiecesColor+"'s turn");
                 List<Move> moves = p.PossibleMoves;
                 Move m = players[pturn].GetMove(moves);
+                MovePiece(m);
                 if (pturn > players.Count)
                 {
                     pturn++;
