@@ -47,6 +47,7 @@ namespace Checkers.Controller
             bool win = false;
             while (!win)
             {
+                p.UpdateMoves(players[pturn]);
                 List<Move> moves = p.PossibleMoves;
                 Move m = players[pturn].GetMove(moves);
                 if (pturn > players.Count)
