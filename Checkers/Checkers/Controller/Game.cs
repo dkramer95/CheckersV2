@@ -28,6 +28,7 @@ namespace Checkers.Controller
         {
             TypeMenu types = new TypeMenu();
             players = types.Type();
+            players[0].PiecesColor = Color.Black;
             Board.Reset();
             Board.Populate(players[0].Pieces, players[1].Pieces);
             // testing
@@ -51,7 +52,7 @@ namespace Checkers.Controller
                 List<Move> moves = p.PossibleMoves;
                 Move m = players[pturn].GetMove(moves);
                 MovePiece(m);
-                if (pturn > players.Count)
+                if (pturn < players.Count-1)
                 {
                     pturn++;
                 }
