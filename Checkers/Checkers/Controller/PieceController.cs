@@ -61,20 +61,77 @@ namespace Checkers.Controller
 
         public void UpdateMoves(Player p)
         {
-            Dictionary<Piece, Position> piecePositions = new Dictionary<Piece, Position>();
-            foreach (Piece piece in p.Pieces)
+            Dictionary<Piece, Position> piecePositions = GetPiecePositions(p);
+            foreach (var item in piecePositions)
             {
-                var keyvalue = Board.GridSquares.Where(s => s.Value.Piece == piece).SingleOrDefault();
-                if (!keyvalue.Equals(default(KeyValuePair<Position, Square>)))
+                List<Move> tempMoves = GetPieceMovementOptions(item.Key, item.Value);
+                foreach (var move in tempMoves)
                 {
-                    piecePositions.Add(piece, keyvalue.Key);
+                    PossibleMoves.Add(move);
                 }
             }
 
 
 
-
             // Default Move thing
+        }
+
+        private List<Move> GetPieceMovementOptions(Piece key, Position value)
+        {
+            List<Move> tempMoves = new List<Move>();
+            int direction = 1;
+            if (key.Color == Color.Black)
+            {
+                direction = -1;
+            }
+            Position pos =new Position((char)(Convert.ToInt32(value.Column) + 1), value.Row + direction);
+
+            Square square = Board.SquareAt(pos);
+            if (square != null)
+            {
+                if (square.Piece != null)
+                {
+                    if (square.Piece.Color != key.Color)
+                    {
+                        Square square2 = Board.SquareAt(new Position((char)(Convert.ToInt32(value.Column) + 2), value.Row + direction * 2));
+                        if (square != null)
+                        {
+                            if (square.Piece == null)
+                            {
+                                tempMoves.Add(new Move(key, value, new Position((char)(Convert.ToInt32(value.Column) + 2), value.Row + direction * 2), new List<Piece>()));
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    tempMoves.Add(new Move(key, value, new Position((char)(Convert.ToInt32(value.Column) + 1), value.Row + direction), new List<Piece>()));
+                }
+            }
+            square = Board.SquareAt(new Position((char)(Convert.ToInt32(value.Column) - 1), value.Row + direction));
+
+            if (square != null)
+            {
+                if (square.Piece != null)
+                {
+                    if (square.Piece.Color != key.Color)
+                    {
+                        Square square2 = Board.SquareAt(new Position((char)(Convert.ToInt32(value.Column) - 2), value.Row + direction * 2));
+                        if (square != null)
+                        {
+                            if (square.Piece == null)
+                            {
+                                tempMoves.Add(new Move(key, value, new Position((char)(Convert.ToInt32(value.Column) - 2), value.Row + direction * 2), new List<Piece>()));
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    tempMoves.Add(new Move(key, value, new Position((char)(Convert.ToInt32(value.Column) - 1), value.Row + direction), new List<Piece>()));
+                }
+            }
+            return tempMoves;
         }
 
         private Dictionary<Piece, Position> GetPiecePositions(Player p)

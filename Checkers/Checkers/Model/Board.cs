@@ -31,13 +31,21 @@ namespace Checkers.Model
         public static Square SquareAt(char col, int row)
         {
             Position pos = GetKey(col, row);
-            Square square = GridSquares[pos];
+            Square square;
+            if (pos != null)
+            {
+                square = GridSquares[pos];
+            }
+            else
+            {
+                square = null;
+            }
             return square;
         }
 
         private static Position GetKey(char col, int row)
         {
-            Position key = GridSquares.Keys.Where(k => (k.Column == col) && (k.Row == row)).Single();
+            Position key = GridSquares.Keys.Where(k => (k.Column == col) && (k.Row == row)).SingleOrDefault();
             return key;
         }
 
