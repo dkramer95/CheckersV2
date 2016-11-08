@@ -86,14 +86,14 @@ namespace Checkers.Model
             darkPieces.Clear();
             lightPieces.Clear();
 
-            string[] darkPositions = new string[]
+            string[] lightPositions = new string[]
             {
                 "B8", "D8", "F8", "H8",
                 "A7", "C7", "E7", "G7",
                 "B6", "D6", "F6", "H6"
             };
 
-            string[] lightPositions = new string[]
+            string[] darkPositions = new string[]
             {
                 "A3", "C3", "E3", "G3",
                 "B2", "D2", "F2", "H2",

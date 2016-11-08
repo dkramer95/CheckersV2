@@ -80,7 +80,7 @@ namespace Checkers.Controller
         {
             List<Move> tempMoves = new List<Move>();
             int direction = 1;
-            if (key.Color == Color.Black)
+            if (key.Color == Color.Red)
             {
                 direction = -1;
             }
