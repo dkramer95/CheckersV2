@@ -19,8 +19,8 @@ namespace Checkers.Controller
                 String[] moves = move.Split(',');
                     foreach (Move m in PossibleMoves)
                 {
-                    if (m.StartPosition.Column==moves[0][0]&& m.StartPosition.Row == int.Parse(moves[0][1].ToString())&&
-                    m.EndPosition.Column==moves[1][0]&& m.EndPosition.Row == int.Parse(moves[1][1].ToString()))
+                    if (m.StartPosition.Column==Char.ToUpper(moves[0][0])&& m.StartPosition.Row == int.Parse(moves[0][1].ToString())&&
+                    m.EndPosition.Column==Char.ToUpper(moves[1][0])&& m.EndPosition.Row == int.Parse(moves[1][1].ToString()))
                     {
                         realmove = m;
                         valid = true;
