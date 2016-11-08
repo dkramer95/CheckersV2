@@ -9,14 +9,20 @@ using System.Windows.Media;
 
 namespace CheckersGUI
 {
-    public class SquareView : Label
+    public class SquareView : Button
     {
+        public PieceView PieceView { get; private set; }
+
         public SquareView()
         {
-            //Background = Brushes.Transparent;
             Background = Brushes.Red;
             BorderBrush = Brushes.Black;
             BorderThickness = new Thickness(3);
+        }
+
+        public void SetPieceView(PieceView pieceView)
+        {
+            Content = pieceView;
         }
     }
 }

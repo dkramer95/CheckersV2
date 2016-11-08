@@ -25,6 +25,9 @@ namespace CheckersGUI
             for (int j = 0; j < 64; ++j)
             {
                 SquareView square = new SquareView();
+                PieceView piece = new PieceView();
+                piece.SetImagePath("res/BLACK_KING.png");
+                square.SetPieceView(piece);
                 Squares.Add(square);
                 Children.Add(square);
             }
