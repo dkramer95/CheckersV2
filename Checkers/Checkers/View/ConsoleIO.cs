@@ -12,7 +12,6 @@ namespace Checkers.View
     {
         public string Prompt()
         {
-            Console.WriteLine(Board.ToString());
             Console.WriteLine("Please enter postions in the following format l=leter n=whole number ln");
             string startpos = Postion("Please enter postion you want to move");
             string endpos = Postion("Please enter postion you want to move to");
