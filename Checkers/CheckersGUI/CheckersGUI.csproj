@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="PieceView.cs" />
     <Compile Include="SquareView.cs" />
+    <Compile Include="ViewController.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

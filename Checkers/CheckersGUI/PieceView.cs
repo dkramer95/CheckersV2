@@ -9,6 +9,9 @@ using System.Windows.Media.Imaging;
 
 namespace CheckersGUI
 {
+    /// <summary>
+    /// This represents the view for a Checkers Piece.
+    /// </summary>
     public class PieceView : Label
     {
         public PieceView()

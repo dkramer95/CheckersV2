@@ -10,6 +10,9 @@ using System.Windows.Media;
 
 namespace CheckersGUI
 {
+    /// <summary>
+    /// This represents the view of a Square.
+    /// </summary>
     public class SquareView : Button
     {
         public PieceView PieceView { get; private set; }

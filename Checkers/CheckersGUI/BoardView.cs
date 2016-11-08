@@ -9,34 +9,36 @@ namespace CheckersGUI
 {
     public class BoardView : UniformGrid
     {
+        private static readonly int COLUMN_COUNT = 8;
+        private static readonly int ROW_COUNT = 8;
+
         public List<SquareView> Squares { get; private set; }
 
         public BoardView()
         {
-            Columns = 8;
-            Rows = 8;
-            AddSquares();
+            Init();
         }
 
-        private void AddSquares()
+        private void Init()
         {
+            Columns = COLUMN_COUNT; 
+            Rows = ROW_COUNT;
             Squares = new List<SquareView>();
-            SquareView square = null;
+            CreateSquares();
+        }
 
+        private void CreateSquares()
+        {
             // vertical columns
-            for (int j = 0; j < 8; ++j)
+            for (int col = 0; col < COLUMN_COUNT; ++col)
             {
                 // horizontal rows
-                for (int k = 0; k < 8; ++k)
+                for (int row = 0; row < ROW_COUNT; ++row)
                 {
                     // alternate between colors
-                    square = ((k + j) % 2 == 0) ?
-                             SquareView.FromColor(Checkers.Model.Color.Black) :
-                             SquareView.FromColor(Checkers.Model.Color.Red);
-
-                    // TODO add pieces later
-                    //PieceView piece = PieceView.FromPath("res/BLACK_KING.png"); 
-                    //square.SetPieceView(piece);
+                    SquareView square = ((row + col) % 2 == 0) ?
+                                         SquareView.FromColor(Checkers.Model.Color.Black) :
+                                         SquareView.FromColor(Checkers.Model.Color.Red);
                     AddSquare(square);
                 }
             }

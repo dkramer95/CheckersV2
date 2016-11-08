@@ -8,7 +8,7 @@ using Checkers.View;
 
 namespace Checkers.Controller
 {
-    class Game
+    public class Game
     {
         private UndoStack undoStack;
         PieceController p = new PieceController();
