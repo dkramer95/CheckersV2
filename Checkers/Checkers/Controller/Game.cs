@@ -31,7 +31,6 @@ namespace Checkers.Controller
             Board.Reset();
             Board.Populate(players[0].Pieces, players[1].Pieces);
             // testing
-            Console.WriteLine(Board.ToString());
             GamePlay();
         }
 
@@ -47,8 +46,11 @@ namespace Checkers.Controller
             while (!win)
             {
                 p.UpdateMoves(players[pturn]);
+                Console.WriteLine(Board.ToString());
+                Console.WriteLine(players[pturn].PiecesColor+"'s turn");
                 List<Move> moves = p.PossibleMoves;
                 Move m = players[pturn].GetMove(moves);
+                MovePiece(m);
                 if (pturn > players.Count)
                 {
                     pturn++;
@@ -62,9 +64,9 @@ namespace Checkers.Controller
         }
         private void MovePiece(Move m)
         {
-            Piece p=Board.SquareAt(m.StartPosition.Column, m.StartPosition.Column).Piece;
+            Piece p=Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).Piece;
             Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).AddPiece(p);
-            Board.SquareAt(m.StartPosition.Column, m.StartPosition.Column).RemovePiece();
+            Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).RemovePiece();
             if((m.EndPosition.Row==1&&p.Color==Color.Black)||(m.EndPosition.Row == 8 && p.Color == Color.Red))
             {
 
