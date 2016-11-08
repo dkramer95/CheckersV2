@@ -29,5 +29,12 @@ namespace CheckersGUI
             imgBrush.Stretch = Stretch.Uniform;
             Background = imgBrush;
         }
+
+        public static PieceView FromPath(string path)
+        {
+            PieceView pieceView = new PieceView();
+            pieceView.SetImagePath(path);
+            return pieceView;
+        }
     }
 }

@@ -21,16 +21,31 @@ namespace CheckersGUI
         private void AddSquares()
         {
             Squares = new List<SquareView>();
+            SquareView square = null;
 
-            for (int j = 0; j < 64; ++j)
+            // vertical columns
+            for (int j = 0; j < 8; ++j)
             {
-                SquareView square = new SquareView();
-                PieceView piece = new PieceView();
-                piece.SetImagePath("res/BLACK_KING.png");
-                square.SetPieceView(piece);
-                Squares.Add(square);
-                Children.Add(square);
+                // horizontal rows
+                for (int k = 0; k < 8; ++k)
+                {
+                    // alternate between colors
+                    square = ((k + j) % 2 == 0) ?
+                             SquareView.FromColor(Checkers.Model.Color.Black) :
+                             SquareView.FromColor(Checkers.Model.Color.Red);
+
+                    // TODO add pieces later
+                    //PieceView piece = PieceView.FromPath("res/BLACK_KING.png"); 
+                    //square.SetPieceView(piece);
+                    AddSquare(square);
+                }
             }
+        }
+
+        private void AddSquare(SquareView square)
+        {
+            Squares.Add(square);
+            Children.Add(square);
         }
     }
 }

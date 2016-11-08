@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Checkers.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace CheckersGUI
 
         public SquareView()
         {
-            Background = Brushes.Red;
+            Background = Brushes.White;
             BorderBrush = Brushes.Black;
             BorderThickness = new Thickness(3);
         }
@@ -23,6 +24,22 @@ namespace CheckersGUI
         public void SetPieceView(PieceView pieceView)
         {
             Content = pieceView;
+        }
+
+        public static SquareView FromColor(Checkers.Model.Color color)
+        {
+            SquareView squareView = new SquareView();
+
+            switch (color)
+            {
+                case Checkers.Model.Color.Black:
+                    squareView.Background = Brushes.Gray;
+                    break;
+                case Checkers.Model.Color.Red:
+                    squareView.Background = Brushes.White;
+                    break;
+            }
+            return squareView;
         }
     }
 }
