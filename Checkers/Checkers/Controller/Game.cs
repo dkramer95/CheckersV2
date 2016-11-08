@@ -64,9 +64,9 @@ namespace Checkers.Controller
         }
         private void MovePiece(Move m)
         {
-            Piece p=Board.SquareAt(m.StartPosition.Column, m.StartPosition.Column).Piece;
+            Piece p=Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).Piece;
             Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).AddPiece(p);
-            Board.SquareAt(m.StartPosition.Column, m.StartPosition.Column).RemovePiece();
+            Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).RemovePiece();
             if((m.EndPosition.Row==1&&p.Color==Color.Black)||(m.EndPosition.Row == 8 && p.Color == Color.Red))
             {
 
