@@ -11,7 +11,7 @@ namespace Checkers.Controller
     class Game
     {
         private UndoStack undoStack;
-
+        PieceController p = new PieceController();
         List<Player> players;
 
         public Game()
@@ -42,11 +42,11 @@ namespace Checkers.Controller
 
         private void GamePlay()
         {
-            PieceController p = new PieceController();           
             int pturn = 0;
             bool win = false;
             while (!win)
             {
+                p.UpdateMoves(players[pturn]);
                 List<Move> moves = p.PossibleMoves;
                 Move m = players[pturn].GetMove(moves);
                 if (pturn > players.Count)
@@ -65,6 +65,11 @@ namespace Checkers.Controller
             Piece p=Board.SquareAt(m.StartPosition.Column, m.StartPosition.Column).Piece;
             Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).AddPiece(p);
             Board.SquareAt(m.StartPosition.Column, m.StartPosition.Column).RemovePiece();
+            if((m.EndPosition.Row==1&&p.Color==Color.Black)||(m.EndPosition.Row == 8 && p.Color == Color.Red))
+            {
+
+                Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).Piece.IsKing = true;
+            }
         }
 
         private void UndoMove()

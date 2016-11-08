@@ -48,5 +48,53 @@ namespace Checkers.Tests
             Assert.IsTrue(piecesThatCanJump.Contains(p.Pieces[0]));
             Assert.IsFalse(piecesThatCanJump.Contains(p.Pieces[1]));
         }
+
+        [TestMethod]
+        public void GetPieceMovementOptionsTest()
+        {
+            List<Piece> lightPieces = new List<Piece>
+            {
+                new Piece { Color = Color.Red },
+                new Piece { Color = Color.Red },
+                new Piece { Color = Color.Red },
+                new Piece { Color = Color.Red },
+                new Piece { Color = Color.Red },
+                new Piece { Color = Color.Red },
+                new Piece { Color = Color.Red },
+                new Piece { Color = Color.Red },
+                new Piece { Color = Color.Red },
+                new Piece { Color = Color.Red },
+                new Piece { Color = Color.Red },
+                new Piece { Color = Color.Red }
+            };
+
+            List<Piece> darkPieces = new List<Piece>
+            {
+                new Piece { Color = Color.Black },
+                new Piece { Color = Color.Black },
+                new Piece { Color = Color.Black },
+                new Piece { Color = Color.Black },
+                new Piece { Color = Color.Black },
+                new Piece { Color = Color.Black },
+                new Piece { Color = Color.Black },
+                new Piece { Color = Color.Black },
+                new Piece { Color = Color.Black },
+                new Piece { Color = Color.Black },
+                new Piece { Color = Color.Black },
+                new Piece { Color = Color.Black }
+            };
+
+            HumanPlayer p1 = new HumanPlayer();
+            p1.Pieces = darkPieces;
+            HumanPlayer p2 = new HumanPlayer();
+            p2.Pieces = lightPieces;
+
+            Board.Reset();
+            Board.Populate(p1.Pieces, p2.Pieces);
+            PieceController con = new PieceController();
+            con.UpdateMoves(p1);
+            Assert.IsTrue(con.GetPiecesThatCanMove(p1).Count == 4);
+            Assert.IsTrue(con.GetPiecesThatCanJump(p1).Count == 0);
+        }
     }
 }
