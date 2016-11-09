@@ -13,6 +13,7 @@ namespace Checkers.Controller
         private UndoStack undoStack;
         PieceController p = new PieceController();
         List<Player> players;
+            
 
         public Game()
         {
@@ -32,7 +33,8 @@ namespace Checkers.Controller
             Board.Reset();
             Board.Populate(players[0].Pieces, players[1].Pieces);
             // testing
-            GamePlay();
+            Player winner=GamePlay();
+            Console.WriteLine(winner.PiecesColor+" Player Wins");
         }
 
         private void ExportState()
@@ -40,26 +42,25 @@ namespace Checkers.Controller
             undoStack.Push(GameState.ExportFromBoardSquares(Board.GridSquares));
         }
 
-        private void GamePlay()
+        private Player GamePlay()
         {
             int pturn = 0;
             bool win = false;
             while (!win)
             {
                 p.UpdateMoves(players[pturn]);
-
-                foreach (Move move in p.PossibleMoves)
+                if (p.PossibleMoves.Count == 0)
                 {
-                    Console.WriteLine("[" + move.StartPosition.Column + "" + move.StartPosition.Row + "]" +
-                        " : " + "[" + move.EndPosition.Column + "" + move.EndPosition.Row + "]");
+                    win = true;
                 }
-
-                Console.WriteLine(Board.ToString());
-                Console.WriteLine(players[pturn].PiecesColor+"'s turn");
-                List<Move> moves = p.PossibleMoves;
-                Move m = players[pturn].GetMove(moves);
-                MovePiece(m);
-                if (pturn < players.Count-1)
+                else {
+                    Console.WriteLine(Board.ToString());
+                    Console.WriteLine(players[pturn].PiecesColor + "'s turn");
+                    List<Move> moves = p.PossibleMoves;
+                    Move m = players[pturn].GetMove(moves);
+                    MovePiece(m);                   
+                }
+                if (pturn < players.Count - 1)
                 {
                     pturn++;
                 }
@@ -67,18 +68,28 @@ namespace Checkers.Controller
                 {
                     pturn = 0;
                 }
+                ExportState();
                 // TODO:: after every turn export the state of the board
+                
             }
+            return players[pturn];
         }
         private void MovePiece(Move m)
         {
-            Piece p=Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).Piece;
-            Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).AddPiece(p);
+            Piece piece=Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).Piece;
+            Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).AddPiece(piece);
             Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).RemovePiece();
-            if((m.EndPosition.Row==1&&p.Color==Color.Black)||(m.EndPosition.Row == 8 && p.Color == Color.Red))
+            if (m.CapturedPieces.Count > 0)
+            {
+                foreach (Piece c in m.CapturedPieces)
+                {
+
+                }
+            }
+            if((m.EndPosition.Row==1&&piece.Color==Color.Black)||(m.EndPosition.Row == 8 && piece.Color == Color.Red))
             {
 
-                Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).Piece.IsKing = true;
+                p.KingPiece(Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).Piece);
             }
         }
 
