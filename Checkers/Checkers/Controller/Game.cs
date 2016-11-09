@@ -81,9 +81,18 @@ namespace Checkers.Controller
             Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).RemovePiece();
             if (m.CapturedPieces.Count > 0)
             {
-                foreach (Piece c in m.CapturedPieces)
+                foreach (KeyValuePair<Position, Square> s in Board.GridSquares)
                 {
-
+                    foreach (Piece c in m.CapturedPieces)
+                    {
+                        if (s.Value.Piece!=null)
+                        {
+                            if (s.Value.Piece ==c)
+                            {
+                                Board.SquareAt(s.Key.Column, s.Key.Row).RemovePiece();
+                            }
+                        }
+                    }
                 }
             }
             if((m.EndPosition.Row==1&&piece.Color==Color.Black)||(m.EndPosition.Row == 8 && piece.Color == Color.Red))
