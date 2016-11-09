@@ -62,5 +62,11 @@ namespace CheckersGUI
             // update background style
             Background = isHighlighted ? HighlightColor : SquareColor;
         }
+
+        public void ClearHighlight()
+        {
+            isHighlighted = false;
+            Background = SquareColor;
+        }
     }
 }

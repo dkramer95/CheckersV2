@@ -16,6 +16,13 @@ namespace CheckersGUI
     {
         public BoardView BoardView { get; private set; }
 
+        // Starting square we clicked on
+        public SquareView StartSquare { get; private set; }
+
+        // Ending square we clicked on
+        public SquareView EndSquare { get; private set; }
+
+
         public ViewController()
         {
             Init();
@@ -76,8 +83,34 @@ namespace CheckersGUI
         private void SquareView_Click(object sender, RoutedEventArgs e)
         {
             SquareView squareView = sender as SquareView;
-            Square square = squareView.DataContext as Square;
-            squareView.ToggleHighlight();
+
+            // haven't clicked the initial starting square yet
+            if (StartSquare == null)
+            {
+                StartSquare = squareView;
+                StartSquare.ToggleHighlight();
+            }
+            // we clicked on the same starting square -- clear out
+            else if (StartSquare == squareView)
+            {
+                StartSquare.ClearHighlight();
+                StartSquare = null;
+                EndSquare = null;
+            } 
+            // both start and end are set, clear them out
+            else if (StartSquare != null && EndSquare != null)
+            {
+                StartSquare.ClearHighlight();
+                StartSquare = null;
+
+                EndSquare.ClearHighlight();
+                EndSquare = null;
+            }
+            // second click for end square
+            else
+            {
+                EndSquare = squareView;
+            }
         }
     }
 }
