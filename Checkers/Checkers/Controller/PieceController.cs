@@ -153,15 +153,14 @@ namespace Checkers.Controller
                     }
                 }
             }
-            //if (tempMoves.Count != 0)
-            //{
-            //    List<Move> removedMoves = new List<Move>();
-            //    foreach (Move move in tempMoves)
-            //    {
-            //        tempMoves.AddRange(CheckJumps(move.Piece, move.EndPosition, direction));
-            //        removedMoves.Add(move);
-            //    }
-            //}
+            if (tempMoves.Count != 0)
+            {
+                List<Move> tempHolder = tempMoves;
+                foreach (Move move in tempHolder)
+                {
+                    List<Move> jump;
+                }
+            }
             return tempMoves;
         }
 
