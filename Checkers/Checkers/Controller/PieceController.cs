@@ -61,14 +61,11 @@ namespace Checkers.Controller
 
         public void UpdateMoves(Player p)
         {
+            PossibleMoves.Clear();
             Dictionary<Piece, Position> piecePositions = GetPiecePositions(p);
             foreach (var item in piecePositions)
             {
-                List<Move> tempMoves = GetPieceMovementOptions(item.Key, item.Value);
-                foreach (var move in tempMoves)
-                {
-                    PossibleMoves.Add(move);
-                }
+                PossibleMoves.AddRange(GetPieceMovementOptions(item.Key, item.Value));
             }
 
 
@@ -84,53 +81,87 @@ namespace Checkers.Controller
             {
                 direction = -1;
             }
-            Position pos =new Position((char)(Convert.ToInt32(value.Column) + 1), value.Row + direction);
 
-            Square square = Board.SquareAt(pos);
+            tempMoves = CheckJumps(key, value, direction);
+            tempMoves.AddRange(CheckMoves(key, value, direction));
+
+            
+            return tempMoves;
+        }
+
+        private List<Move> CheckMoves(Piece piece, Position position, int direction)
+        {
+            List<Move> tempMoves = new List<Move>();
+            Square square = Board.SquareAt(new Position((char)(Convert.ToInt32(position.Column) + 1), position.Row + direction));
+            if (square != null)
+            {
+                if (square.Piece == null)
+                {
+                    tempMoves.Add(new Move(piece, position, new Position((char)(Convert.ToInt32(position.Column) + 1), position.Row + direction), new List<Piece>()));
+                }
+            }
+            square = Board.SquareAt(new Position((char)(Convert.ToInt32(position.Column) - 1), position.Row + direction));
+            if (square != null)
+            {
+                if (square.Piece == null)
+                {
+                    tempMoves.Add(new Move(piece, position, new Position((char)(Convert.ToInt32(position.Column) - 1), position.Row + direction), new List<Piece>()));
+                }
+            }
+            return tempMoves;
+        }
+
+        private List<Move> CheckJumps(Piece piece, Position position, int direction)
+        {
+            List<Move> tempMoves = new List<Move>();
+            Square square = Board.SquareAt(new Position((char)(Convert.ToInt32(position.Column) - 1), position.Row + direction));
+
             if (square != null)
             {
                 if (square.Piece != null)
                 {
-                    if (square.Piece.Color != key.Color)
+                    if (square.Piece.Color != piece.Color)
                     {
-                        Square square2 = Board.SquareAt(new Position((char)(Convert.ToInt32(value.Column) + 2), value.Row + direction * 2));
+                        square = Board.SquareAt(new Position((char)(Convert.ToInt32(position.Column) - 2), position.Row + direction * 2));
                         if (square != null)
                         {
                             if (square.Piece == null)
                             {
-                                tempMoves.Add(new Move(key, value, new Position((char)(Convert.ToInt32(value.Column) + 2), value.Row + direction * 2), new List<Piece>()));
+                                tempMoves.Add(new Move(piece, position, new Position((char)(Convert.ToInt32(position.Column) - 2), position.Row + direction * 2), new List<Piece>()));
                             }
                         }
                     }
                 }
-                else
-                {
-                    tempMoves.Add(new Move(key, value, new Position((char)(Convert.ToInt32(value.Column) + 1), value.Row + direction), new List<Piece>()));
-                }
             }
-            square = Board.SquareAt(new Position((char)(Convert.ToInt32(value.Column) - 1), value.Row + direction));
+
+            square = Board.SquareAt(new Position((char)(Convert.ToInt32(position.Column) + 1), position.Row + direction));
 
             if (square != null)
             {
                 if (square.Piece != null)
                 {
-                    if (square.Piece.Color != key.Color)
+                    if (square.Piece.Color != piece.Color)
                     {
-                        Square square2 = Board.SquareAt(new Position((char)(Convert.ToInt32(value.Column) - 2), value.Row + direction * 2));
+                        square = Board.SquareAt(new Position((char)(Convert.ToInt32(position.Column) + 2), position.Row + direction * 2));
                         if (square != null)
                         {
                             if (square.Piece == null)
                             {
-                                tempMoves.Add(new Move(key, value, new Position((char)(Convert.ToInt32(value.Column) - 2), value.Row + direction * 2), new List<Piece>()));
+                                tempMoves.Add(new Move(piece, position, new Position((char)(Convert.ToInt32(position.Column) + 2), position.Row + direction * 2), new List<Piece>()));
                             }
                         }
                     }
                 }
-                else
-                {
-                    tempMoves.Add(new Move(key, value, new Position((char)(Convert.ToInt32(value.Column) - 1), value.Row + direction), new List<Piece>()));
-                }
             }
+            //if (tempMoves.Count != 0)
+            //{
+            //    List<Move> removedMoves = new List<Move>();
+            //    foreach (Move move in tempMoves)
+            //    {
+            //        tempMoves.AddRange(CheckJumps(move.Piece, move.EndPosition, direction));
+            //        removedMoves.Add(move);
+            //    }
+            //}
             return tempMoves;
         }
 
