@@ -122,12 +122,12 @@ namespace Checkers.Controller
                 {
                     if (square.Piece.Color != piece.Color)
                     {
-                        square = Board.SquareAt(new Position((char)(Convert.ToInt32(position.Column) - 2), position.Row + direction * 2));
-                        if (square != null)
+                        Square square2 = Board.SquareAt(new Position((char)(Convert.ToInt32(position.Column) - 2), position.Row + direction * 2));
+                        if (square2 != null)
                         {
-                            if (square.Piece == null)
+                            if (square2.Piece == null)
                             {
-                                tempMoves.Add(new Move(piece, position, new Position((char)(Convert.ToInt32(position.Column) - 2), position.Row + direction * 2), new List<Piece>()));
+                                tempMoves.Add(new Move(piece, position, new Position((char)(Convert.ToInt32(position.Column) - 2), position.Row + direction * 2), new List<Piece> { square.Piece }));
                             }
                         }
                     }
@@ -142,12 +142,12 @@ namespace Checkers.Controller
                 {
                     if (square.Piece.Color != piece.Color)
                     {
-                        square = Board.SquareAt(new Position((char)(Convert.ToInt32(position.Column) + 2), position.Row + direction * 2));
-                        if (square != null)
+                        Square square2 = Board.SquareAt(new Position((char)(Convert.ToInt32(position.Column) + 2), position.Row + direction * 2));
+                        if (square2 != null)
                         {
-                            if (square.Piece == null)
+                            if (square2.Piece == null)
                             {
-                                tempMoves.Add(new Move(piece, position, new Position((char)(Convert.ToInt32(position.Column) + 2), position.Row + direction * 2), new List<Piece>()));
+                                tempMoves.Add(new Move(piece, position, new Position((char)(Convert.ToInt32(position.Column) + 2), position.Row + direction * 2), new List<Piece> { square.Piece }));
                             }
                         }
                     }
