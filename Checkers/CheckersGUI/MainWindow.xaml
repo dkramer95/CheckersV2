@@ -10,7 +10,7 @@
         <DockPanel x:Name="boardPanel"
                    Width="600"
                    Height="600"
-                   Background="Magenta"
+                   Background="White"
                    LastChildFill="True">
         </DockPanel>
     </DockPanel>

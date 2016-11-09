@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Checkers.Model;
+using System.Windows;
+using System.Windows.Media;
 
 namespace CheckersGUI
 {
@@ -30,15 +32,17 @@ namespace CheckersGUI
             foreach (Position p in boardSquares.Keys)
             {
                 Square square = boardSquares[p];
+                int viewIndex = SquareViewIndexFromPosition(p);
+                SquareView squareView = BoardView.Squares[viewIndex];
+
+                AddClickEvents(square, squareView);
 
                 if (square.HasPiece())
                 {
-                    int index = SquareViewIndexFromPosition(p);
                     Piece piece = square.Piece;
-
                     string imgPath = GetImagePathFromPiece(piece);
                     PieceView pieceView = PieceView.FromPath(imgPath);
-                    BoardView.Squares[index].SetPieceView(pieceView);
+                    BoardView.Squares[viewIndex].SetPieceView(pieceView);
                 }
             }
         }
@@ -63,5 +67,17 @@ namespace CheckersGUI
             return index;
         }
 
+        private void AddClickEvents(Square squareModel, SquareView squareView)
+        {
+            squareView.DataContext = squareModel;
+            squareView.Click += SquareView_Click;
+        }
+
+        private void SquareView_Click(object sender, RoutedEventArgs e)
+        {
+            SquareView squareView = sender as SquareView;
+            Square square = squareView.DataContext as Square;
+            squareView.ToggleHighlight();
+        }
     }
 }

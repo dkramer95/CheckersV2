@@ -15,6 +15,12 @@ namespace CheckersGUI
     /// </summary>
     public class SquareView : Button
     {
+        // styling
+        private static readonly Brush HighlightColor = Brushes.LightGreen;
+
+        private bool isHighlighted;
+
+        public Brush SquareColor { get; set; }
         public PieceView PieceView { get; private set; }
 
         public SquareView()
@@ -22,6 +28,9 @@ namespace CheckersGUI
             Background = Brushes.White;
             BorderBrush = Brushes.Black;
             BorderThickness = new Thickness(3);
+
+            // default color, but should never be visible unless something didn't setup correctly
+            SquareColor = Brushes.Magenta;
         }
 
         public void SetPieceView(PieceView pieceView)
@@ -36,13 +45,22 @@ namespace CheckersGUI
             switch (color)
             {
                 case Checkers.Model.Color.Black:
-                    squareView.Background = Brushes.Gray;
+                    squareView.SquareColor = Brushes.Gray;
                     break;
                 case Checkers.Model.Color.Red:
-                    squareView.Background = Brushes.White;
+                    squareView.SquareColor = Brushes.White;
                     break;
             }
+            squareView.Background = squareView.SquareColor;
             return squareView;
+        }
+        public void ToggleHighlight()
+        {
+            // toggle flag
+            isHighlighted = isHighlighted ? false : true;
+
+            // update background style
+            Background = isHighlighted ? HighlightColor : SquareColor;
         }
     }
 }
