@@ -8,11 +8,11 @@ using Checkers.View;
 
 namespace Checkers.Controller
 {
-    class Game
+    public class Game
     {
-        private UndoStack undoStack;
-        PieceController p = new PieceController();
-        List<Player> players;
+        protected UndoStack undoStack;
+        protected PieceController pieceController = new PieceController();
+        protected List<Player> players;
 
 
         public Game()
@@ -20,7 +20,7 @@ namespace Checkers.Controller
             Init();
         }
 
-        private void Init()
+        protected void Init()
         {
             undoStack = new UndoStack();
         }
@@ -37,35 +37,35 @@ namespace Checkers.Controller
             Console.WriteLine(winner.PiecesColor + " Player Wins");
         }
 
-        private void ExportState()
+        protected void ExportState()
         {
             undoStack.Push(GameState.ExportFromBoardSquares(Board.GridSquares));
         }
 
-        private Player GamePlay()
+        protected Player GamePlay()
         {
             int pturn = 0;
             bool win = false;
             while (!win)
             {
-                p.UpdateMoves(players[pturn]);
+                pieceController.UpdateMoves(players[pturn]);
                 Console.WriteLine(Board.ToString());
-                if (p.PossibleMoves.Count == 0)
+                if (pieceController.PossibleMoves.Count == 0)
                 {
                     win = true;
                 }
                 else {
                     List<Move> moves = new List<Move>();
-                    List<Piece> jumps = p.GetPiecesThatCanJump(players[pturn]);
+                    List<Piece> jumps = pieceController.GetPiecesThatCanJump(players[pturn]);
                     if (jumps.Count != 0)
                     {
                         moves = ForceJump(jumps);
                     }
                     else
                     {
-                        moves = p.PossibleMoves;
+                        moves = pieceController.PossibleMoves;
                     }
-                    foreach (Move move in p.PossibleMoves)
+                    foreach (Move move in pieceController.PossibleMoves)
                     {
                         Console.WriteLine("[" + move.StartPosition.Column + "" + move.StartPosition.Row + "]" + "[" + move.EndPosition.Column + "" + move.EndPosition.Row + "]");
                     }
@@ -91,7 +91,7 @@ namespace Checkers.Controller
         public List<Move> ForceJump(List<Piece> jumps)
         {
             List<Move> m = new List<Move>();
-            foreach (Move s in p.PossibleMoves)
+            foreach (Move s in pieceController.PossibleMoves)
             {
                 foreach (Piece c in jumps)
                 {
@@ -106,7 +106,7 @@ namespace Checkers.Controller
             }
             return m;
         }
-        private void MovePiece(Move m)
+        protected void MovePiece(Move m)
         {
             Piece piece = Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).Piece;
             Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).AddPiece(piece);
@@ -118,10 +118,10 @@ namespace Checkers.Controller
             if ((m.EndPosition.Row == 8 && piece.Color == Color.Black) || (m.EndPosition.Row == 1 && piece.Color == Color.Red))
             {
 
-                p.KingPiece(Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).Piece);
+                pieceController.KingPiece(Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).Piece);
             }
         }
-        private void RemoveinBoard(List<Piece> m)
+        protected void RemoveinBoard(List<Piece> m)
         {
             foreach (KeyValuePair<Position, Square> s in Board.GridSquares)
             {
@@ -137,7 +137,7 @@ namespace Checkers.Controller
                 }
             }
         }
-        private void UndoMove()
+        protected void UndoMove()
         {
             // can't undo if we have nothing to fall back to
             if (undoStack.Size() > 0)
