@@ -84,6 +84,11 @@ namespace Checkers.Controller
 
             tempMoves = CheckJumps(key, value, direction);
             tempMoves.AddRange(CheckMoves(key, value, direction));
+            if (key.IsKing)
+            {
+                tempMoves.AddRange(CheckJumps(key, value, -direction));
+                tempMoves.AddRange(CheckMoves(key, value, -direction));
+            }
 
             
             return tempMoves;
@@ -153,15 +158,25 @@ namespace Checkers.Controller
                     }
                 }
             }
-            //if (tempMoves.Count != 0)
-            //{
-            //    List<Move> removedMoves = new List<Move>();
-            //    foreach (Move move in tempMoves)
-            //    {
-            //        tempMoves.AddRange(CheckJumps(move.Piece, move.EndPosition, direction));
-            //        removedMoves.Add(move);
-            //    }
-            //}
+            if (tempMoves.Count != 0)
+            {
+                List<Move> tempHolder = new List<Move>();
+                tempHolder.AddRange(tempMoves);
+                foreach (Move move in tempHolder)
+                {
+                    List<Move> jump = CheckJumps(move.Piece, move.EndPosition, direction);
+                    if (jump.Count > 0)
+                    {
+                        foreach (Move jumpMove in jump)
+                        {
+                            jumpMove.StartPosition = move.StartPosition;
+                            jumpMove.CapturedPieces.AddRange(move.CapturedPieces);
+                        }
+                        tempMoves.Remove(move);
+                        tempMoves.AddRange(jump);
+                    }
+                }
+            }
             return tempMoves;
         }
 
