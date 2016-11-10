@@ -49,6 +49,7 @@ namespace Checkers.Controller
             while (!win)
             {
                 p.UpdateMoves(players[pturn]);
+                Console.WriteLine(Board.ToString());
                 if (p.PossibleMoves.Count == 0)
                 {
                     win = true;
@@ -58,7 +59,6 @@ namespace Checkers.Controller
                     {
                         Console.WriteLine("[" + move.StartPosition.Column + "" + move.StartPosition.Row + "]" + "[" + move.EndPosition.Column + "" + move.EndPosition.Row + "]");
                     }
-                    Console.WriteLine(Board.ToString());
                     Console.WriteLine(players[pturn].PiecesColor + "'s turn");
                     List<Move> moves = p.PossibleMoves;
                     Move m = players[pturn].GetMove(moves);
@@ -99,7 +99,7 @@ namespace Checkers.Controller
                     }
                 }
             }
-            if((m.EndPosition.Row==1&&piece.Color==Color.Black)||(m.EndPosition.Row == 8 && piece.Color == Color.Red))
+            if((m.EndPosition.Row==8&&piece.Color==Color.Black)||(m.EndPosition.Row == 1 && piece.Color == Color.Red))
             {
 
                 p.KingPiece(Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).Piece);
