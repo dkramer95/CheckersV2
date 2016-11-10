@@ -13,7 +13,7 @@ namespace Checkers.Controller
         private UndoStack undoStack;
         PieceController p = new PieceController();
         List<Player> players;
-            
+
 
         public Game()
         {
@@ -33,8 +33,8 @@ namespace Checkers.Controller
             Board.Reset();
             Board.Populate(players[0].Pieces, players[1].Pieces);
             // testing
-            Player winner=GamePlay();
-            Console.WriteLine(winner.PiecesColor+" Player Wins");
+            Player winner = GamePlay();
+            Console.WriteLine(winner.PiecesColor + " Player Wins");
         }
 
         private void ExportState()
@@ -55,14 +55,24 @@ namespace Checkers.Controller
                     win = true;
                 }
                 else {
+                    List<Move> moves = new List<Move>();
+                    List<Piece> jumps = p.GetPiecesThatCanJump(players[pturn]);
+                    if (jumps.Count != 0)
+                    {
+                        moves = ForceJump(jumps);
+                    }
+                    else
+                    {
+                        moves = p.PossibleMoves;
+                    }
                     foreach (Move move in p.PossibleMoves)
                     {
                         Console.WriteLine("[" + move.StartPosition.Column + "" + move.StartPosition.Row + "]" + "[" + move.EndPosition.Column + "" + move.EndPosition.Row + "]");
                     }
                     Console.WriteLine(players[pturn].PiecesColor + "'s turn");
-                    List<Move> moves = p.PossibleMoves;
+
                     Move m = players[pturn].GetMove(moves);
-                    MovePiece(m);                   
+                    MovePiece(m);
                 }
                 if (pturn < players.Count - 1)
                 {
@@ -74,38 +84,59 @@ namespace Checkers.Controller
                 }
                 ExportState();
                 // TODO:: after every turn export the state of the board
-                
+
             }
             return players[pturn];
         }
-        private void MovePiece(Move m)
+        public List<Move> ForceJump(List<Piece> jumps)
         {
-            Piece piece=Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).Piece;
-            Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).AddPiece(piece);
-            Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).RemovePiece();
-            if (m.CapturedPieces.Count > 0)
+            List<Move> m = new List<Move>();
+            foreach (Move s in p.PossibleMoves)
             {
-                foreach (KeyValuePair<Position, Square> s in Board.GridSquares)
+                foreach (Piece c in jumps)
                 {
-                    foreach (Piece c in m.CapturedPieces)
+                    if (s.Piece != null)
                     {
-                        if (s.Value.Piece!=null)
+                        if (s.Piece == c)
                         {
-                            if (s.Value.Piece ==c)
-                            {
-                                Board.SquareAt(s.Key.Column, s.Key.Row).RemovePiece();
-                            }
+                            m.Add(s);
                         }
                     }
                 }
             }
-            if((m.EndPosition.Row==8&&piece.Color==Color.Black)||(m.EndPosition.Row == 1 && piece.Color == Color.Red))
+            return m;
+        }
+        private void MovePiece(Move m)
+        {
+            Piece piece = Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).Piece;
+            Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).AddPiece(piece);
+            Board.SquareAt(m.StartPosition.Column, m.StartPosition.Row).RemovePiece();
+            if (m.CapturedPieces.Count > 0)
+            {
+                RemoveinBoard(m.CapturedPieces);
+            }
+            if ((m.EndPosition.Row == 8 && piece.Color == Color.Black) || (m.EndPosition.Row == 1 && piece.Color == Color.Red))
             {
 
                 p.KingPiece(Board.SquareAt(m.EndPosition.Column, m.EndPosition.Row).Piece);
             }
         }
-
+        private void RemoveinBoard(List<Piece> m)
+        {
+            foreach (KeyValuePair<Position, Square> s in Board.GridSquares)
+            {
+                foreach (Piece c in m)
+                {
+                    if (s.Value.Piece != null)
+                    {
+                        if (s.Value.Piece == c)
+                        {
+                            Board.SquareAt(s.Key.Column, s.Key.Row).RemovePiece();
+                        }
+                    }
+                }
+            }
+        }
         private void UndoMove()
         {
             // can't undo if we have nothing to fall back to
@@ -117,7 +148,7 @@ namespace Checkers.Controller
                 GameState undoState = undoStack.Pop();
 
                 // for every piece in the state, add place it on the board
-                foreach(Position pos in undoState.PieceLayout.Keys)
+                foreach (Position pos in undoState.PieceLayout.Keys)
                 {
                     Piece piece = undoState.PieceLayout[pos];
                     Board.SquareAt(pos).AddPiece(piece);

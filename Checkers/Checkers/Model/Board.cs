@@ -144,8 +144,24 @@ namespace Checkers.Model
                     Square square = SquareAt(pos);
 
                     // print piece if exists, otherwise empty space
-                    string squareStr = square.HasPiece() ? "[" + square.Piece.AsciiValue + "]" : "[ ]";
-                    sb.Append(squareStr);
+                    if (square.Piece != null)
+                    {
+                        if (square.Piece.IsKing)
+                        {
+                            string squareStr = square.HasPiece() ? "[" + char.ToUpper(square.Piece.AsciiValue) + "]" : "[ ]";
+                            sb.Append(squareStr);
+                        }
+                        else
+                        {
+                            string squareStr = square.HasPiece() ? "[" + char.ToLower(square.Piece.AsciiValue) + "]" : "[ ]";
+                            sb.Append(squareStr);
+                        }
+                    }
+                    else
+                    {
+                        string squareStr = square.HasPiece() ? "[" + square.Piece.AsciiValue + "]" : "[ ]";
+                        sb.Append(squareStr);
+                    }
                 }
                 sb.Append("\n");
             }
