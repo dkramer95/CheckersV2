@@ -26,6 +26,7 @@ namespace CheckersGUI
         public SquareView()
         {
             Background = Brushes.White;
+            PieceView = new PieceView();
             BorderBrush = Brushes.Black;
             BorderThickness = new Thickness(3);
 
@@ -61,6 +62,12 @@ namespace CheckersGUI
 
             // update background style
             Background = isHighlighted ? HighlightColor : SquareColor;
+        }
+
+        public void ClearPieceImage()
+        {
+            PieceView.Background = Brushes.Transparent;
+            Content = PieceView;
         }
 
         public void ClearHighlight()

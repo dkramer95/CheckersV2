@@ -22,7 +22,7 @@ namespace CheckersGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ViewController ViewController { get; set; }
+        private GameController GameController { get; set; }
 
         public MainWindow()
         {
@@ -32,21 +32,15 @@ namespace CheckersGUI
 
         private void CreateGame()
         {
-            //TODO:: this should be moved elsewhere, later
-
-            // this should be selected through a menu system, later
-            List<Player> players = new List<Player>() { new HumanPlayer(), new HumanPlayer() };
-            Board.Reset();
-            Board.Populate(players[0].Pieces, players[1].Pieces);
+            GameController = new GameController();
             InitView();
+            GameController.StartGame();
         }
 
         private void InitView()
         {
-            ViewController = new ViewController();
-            ViewController.AddPiecesToView(Board.GridSquares);
             // add view to this window
-            boardPanel.Children.Add(ViewController.BoardView);
+            boardPanel.Children.Add(GameController.ViewController.BoardView);
         }
     }
 }

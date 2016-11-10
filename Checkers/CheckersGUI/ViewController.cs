@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Checkers.Model;
 using System.Windows;
 using System.Windows.Media;
+using System.Threading;
 
 namespace CheckersGUI
 {
@@ -14,6 +15,8 @@ namespace CheckersGUI
     /// </summary>
     public class ViewController
     {
+        public GameController GameController { get; private set; }
+
         public BoardView BoardView { get; private set; }
 
         // Starting square we clicked on
@@ -23,8 +26,9 @@ namespace CheckersGUI
         public SquareView EndSquare { get; private set; }
 
 
-        public ViewController()
+        public ViewController(GameController gameController)
         {
+            GameController = gameController;
             Init();
         }
 
@@ -54,6 +58,34 @@ namespace CheckersGUI
             }
         }
 
+        public void UpdateView(Dictionary<Position, Square> boardSquares)
+        {
+            foreach (Position p in boardSquares.Keys)
+            {
+                Square square = boardSquares[p];
+                int viewIndex = SquareViewIndexFromPosition(p);
+                SquareView squareView = BoardView.Squares[viewIndex];
+
+                if (square.HasPiece())
+                {
+                    Piece piece = square.Piece;
+                    string imgPath = GetImagePathFromPiece(piece);
+                    PieceView pieceView = PieceView.FromPath(imgPath);
+                    BoardView.Squares[viewIndex].SetPieceView(pieceView);
+                }
+                else
+                {
+                    squareView.ClearPieceImage();
+                }
+            }
+        }
+
+        public void ClearExistingPieces()
+        {
+            //BoardView.Squares.ForEach(s => s.ClearPieceImage());
+            BoardView.Squares.Clear();
+        }
+
         private string GetImagePathFromPiece(Piece piece)
         {
             string imgPath = string.Format("res/{0}{1}.png", piece.Color.ToString(), piece.IsKing ? "_KING" : "");
@@ -66,7 +98,7 @@ namespace CheckersGUI
         /// </summary>
         /// <param name="pos">Position to map to index</param>
         /// <returns>index int value</returns>
-        private int SquareViewIndexFromPosition(Position pos)
+        public static int SquareViewIndexFromPosition(Position pos)
         {
             int col = pos.Column - 'A';
             int row = 8 - pos.Row;
@@ -78,6 +110,22 @@ namespace CheckersGUI
         {
             squareView.DataContext = squareModel;
             squareView.Click += SquareView_Click;
+        }
+
+        public void ClearSquares()
+        {
+            if (StartSquare != null)
+            {
+                StartSquare.ClearHighlight();
+                StartSquare = null;
+            }
+
+            if (EndSquare != null)
+            {
+                EndSquare.ClearHighlight();
+                EndSquare = null;
+            }
+            MessageBox.Show("Moves cleared!");
         }
 
         private void SquareView_Click(object sender, RoutedEventArgs e)
@@ -110,6 +158,11 @@ namespace CheckersGUI
             else
             {
                 EndSquare = squareView;
+
+                // let game controller handle move checking
+                Square startSquareModel = StartSquare.DataContext as Square;
+                Square endSquareModel = EndSquare.DataContext as Square;
+                GameController.CheckMove(startSquareModel, endSquareModel);
             }
         }
     }

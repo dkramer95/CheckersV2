@@ -55,7 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GUIGame.cs" />
+    <Compile Include="GameController.cs" />
     <Compile Include="PieceView.cs" />
     <Compile Include="SquareView.cs" />
     <Compile Include="ViewController.cs" />
