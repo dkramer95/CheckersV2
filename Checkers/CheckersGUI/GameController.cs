@@ -115,6 +115,7 @@ namespace CheckersGUI
         private void UpdateView()
         {
             ViewController.UpdateView(Board.GridSquares);
+            ViewController.ClearSquares();
         }
 
         private bool CheckWin()
@@ -163,7 +164,6 @@ namespace CheckersGUI
                 curPlayerIndex = 0;
             }
             Player curPlayer = Players[curPlayerIndex];
-            MessageBox.Show("NEXT PLAYER::" + curPlayer.PiecesColor);
             return curPlayer;
         }
 

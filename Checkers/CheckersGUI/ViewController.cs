@@ -80,12 +80,6 @@ namespace CheckersGUI
             }
         }
 
-        public void ClearExistingPieces()
-        {
-            //BoardView.Squares.ForEach(s => s.ClearPieceImage());
-            BoardView.Squares.Clear();
-        }
-
         private string GetImagePathFromPiece(Piece piece)
         {
             string imgPath = string.Format("res/{0}{1}.png", piece.Color.ToString(), piece.IsKing ? "_KING" : "");
@@ -125,7 +119,6 @@ namespace CheckersGUI
                 EndSquare.ClearHighlight();
                 EndSquare = null;
             }
-            MessageBox.Show("Moves cleared!");
         }
 
         private void SquareView_Click(object sender, RoutedEventArgs e)
