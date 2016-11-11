@@ -42,8 +42,9 @@ namespace CheckersGUI
 
         private void InitPlayers()
         {
-            Players = new List<Player>() { new HumanPlayer(), new HumanPlayer() };
-
+            TypeMenu t = new TypeMenu();
+            t.ShowDialog();
+            Players = t.m;
             curPlayerIndex = 0;
             CurPlayerMadeMove = false;
         }

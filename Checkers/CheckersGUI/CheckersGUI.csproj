@@ -58,6 +58,9 @@
     <Compile Include="GameController.cs" />
     <Compile Include="PieceView.cs" />
     <Compile Include="SquareView.cs" />
+    <Compile Include="TypeMenu.xaml.cs">
+      <DependentUpon>TypeMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewController.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -72,6 +75,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="TypeMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
