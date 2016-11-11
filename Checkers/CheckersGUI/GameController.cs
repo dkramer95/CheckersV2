@@ -56,6 +56,7 @@ namespace CheckersGUI
             InitView();
             StartGame();
             UpdateView();
+            Console.WriteLine(Board.ToString());
         }
 
         private void InitBoard()
