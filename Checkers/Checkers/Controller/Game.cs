@@ -36,6 +36,10 @@ namespace Checkers.Controller
             Player winner = GamePlay();
             Console.WriteLine(winner.PiecesColor + " Player Wins");
         }
+        public void PrintBoard()
+        {
+            Console.WriteLine(Board.ToString());
+        }
 
         protected void ExportState()
         {
