@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,14 @@ namespace CheckersGUI
 
         public void SetImagePath(string path)
         {
-            ImageBrush imgBrush = new ImageBrush(new BitmapImage(new Uri(path, UriKind.Relative)));
+            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            Stream myStream = myAssembly.GetManifestResourceStream(path);
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.StreamSource = myStream;
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.EndInit();
+            ImageBrush imgBrush = new ImageBrush(image);
             imgBrush.Stretch = Stretch.Uniform;
             Background = imgBrush;
         }

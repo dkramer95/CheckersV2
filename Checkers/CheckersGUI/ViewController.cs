@@ -84,7 +84,7 @@ namespace CheckersGUI
 
         private string GetImagePathFromPiece(Piece piece)
         {
-            string imgPath = string.Format("res/{0}{1}.png", piece.Color.ToString(), piece.IsKing ? "_KING" : "");
+            string imgPath = string.Format("CheckersGUI.res.{0}{1}.png", piece.Color.ToString().ToUpper(), piece.IsKing ? "_KING" : "");
             return imgPath;
         }
 
