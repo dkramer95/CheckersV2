@@ -87,7 +87,7 @@ namespace CheckersGUI
 
         public Move CheckMove(Square start, Square end)
         {
-            List<Move> possibleMoves = PieceController.PossibleMoves;
+            List<Move> possibleMoves = GetValidMoves();
             Move move = null;
 
             foreach (Move m in possibleMoves)
@@ -131,6 +131,7 @@ namespace CheckersGUI
         private bool CheckWin()
         {
             bool win = false;
+            PieceController.UpdateMoves(CurPlayer);
             if (PieceController.PossibleMoves.Count == 0)
             {
                 win = true;
@@ -203,10 +204,18 @@ namespace CheckersGUI
             {
                 MakeMove(move);
                 UpdateView();
-
                 CurPlayer = NextPlayer();
-                PieceController.UpdateMoves(CurPlayer);
-                CurPlayer.TakeTurn();
+
+                if (CheckWin())
+                {
+                    CurPlayer = NextPlayer();
+                    MessageBox.Show("Player:" + CurPlayer.PiecesColor + " wins!");
+                    ResetGame();
+                } else
+                {
+                    PieceController.UpdateMoves(CurPlayer);
+                    CurPlayer.TakeTurn();
+                }
             } else
             {
                 MessageBox.Show("Invalid move!");
