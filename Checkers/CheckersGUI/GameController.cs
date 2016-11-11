@@ -49,6 +49,14 @@ namespace CheckersGUI
             CurPlayerMadeMove = false;
         }
 
+        public void ResetGame()
+        {
+            InitPlayers();
+            InitBoard();
+            InitView();
+            StartGame();
+        }
+
         private void InitBoard()
         {
             Board.Reset();
