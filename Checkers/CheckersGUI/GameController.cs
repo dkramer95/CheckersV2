@@ -46,6 +46,8 @@ namespace CheckersGUI
             Players = t.m;
             Players[0].GameController = this;
             Players[1].GameController = this;
+            Players[0].PiecesColor = Color.Black;
+            Players[1].PiecesColor = Color.Red;
             curPlayerIndex = 0;
             CurPlayerMadeMove = false;
         }
