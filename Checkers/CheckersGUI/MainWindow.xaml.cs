@@ -45,12 +45,12 @@ namespace CheckersGUI
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            CreateGame();
         }
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.Shutdown();
         }
     }
 }
