@@ -1,0 +1,19 @@
+﻿<Window x:Class="CheckersGUI.TypeMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CheckersGUI"
+        mc:Ignorable="d"
+        Title="TypeMenu" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button Content="Player vs Player" Click="Button_Click"/>
+        <Button Content="Player vs Ai" Click="Button_Click_1" Grid.Row="1"/>
+        <Button Content="Ai vs Ai" Click="Button_Click_2" Grid.Row="2"/>
+    </Grid>
+</Window>
