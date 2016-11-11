@@ -55,6 +55,7 @@ namespace CheckersGUI
             InitBoard();
             InitView();
             StartGame();
+            UpdateView();
         }
 
         private void InitBoard()
