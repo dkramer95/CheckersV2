@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -17,8 +18,9 @@ namespace CheckersGUI
             return randMove;
         }
 
-        public override void TakeTurn()
+        public override async void TakeTurn()
         {
+            await Task.Delay(1000);
             GameController.Update();
         }
     }

@@ -14,9 +14,6 @@ namespace CheckersGUI
     /// </summary>
     public class GameController
     {
-        // Flag to check if the current player has made their move
-        public bool CurPlayerMadeMove { get; set; }
-
         private int curPlayerIndex;
         public List<Player> Players { get; private set; }
 
@@ -47,15 +44,14 @@ namespace CheckersGUI
             Players[0].GameController = this;
             Players[1].GameController = this;
             curPlayerIndex = 0;
-            CurPlayerMadeMove = false;
         }
 
         public void ResetGame()
         {
             InitPlayers();
             InitBoard();
-            StartGame();
             UpdateView();
+            StartGame();
         }
 
         private void InitBoard()
