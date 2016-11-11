@@ -86,7 +86,11 @@ namespace CheckersGUI
         public Move CheckMove(Square start, Square end)
         {
             List<Move> possibleMoves = PieceController.PossibleMoves;
-
+            List<Piece> jumps = PieceController.GetPiecesThatCanJump(CurPlayer);
+            if (jumps.Count!=0)
+            {
+                possibleMoves = ForceJump(jumps);
+            }
             Move move = null;
 
             foreach (Move m in possibleMoves)
