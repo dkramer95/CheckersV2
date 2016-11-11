@@ -66,6 +66,8 @@ namespace CheckersGUI
                 int viewIndex = SquareViewIndexFromPosition(p);
                 SquareView squareView = BoardView.Squares[viewIndex];
 
+                squareView.DataContext = square;
+
                 if (square.HasPiece())
                 {
                     Piece piece = square.Piece;
