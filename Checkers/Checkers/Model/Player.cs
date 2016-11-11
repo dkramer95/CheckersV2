@@ -14,6 +14,7 @@ namespace Checkers.Model
 
         public abstract Move GetMove(List<Move> moves);
 
+
         public Player()
         {
             Pieces = new List<Piece>();

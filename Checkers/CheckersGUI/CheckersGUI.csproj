@@ -56,7 +56,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GameController.cs" />
+    <Compile Include="GUIHumanPlayer.cs" />
+    <Compile Include="NewAIPlayer.cs" />
     <Compile Include="PieceView.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="SquareView.cs" />
     <Compile Include="TypeMenu.xaml.cs">
       <DependentUpon>TypeMenu.xaml</DependentUpon>

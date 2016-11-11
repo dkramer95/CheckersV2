@@ -22,7 +22,6 @@ namespace CheckersGUI
 
         public Player CurPlayer { get; private set; }
 
-
         public ViewController ViewController { get; private set; }
         public PieceController PieceController { get; private set; }
 
@@ -45,6 +44,8 @@ namespace CheckersGUI
             TypeMenu t = new TypeMenu();
             t.ShowDialog();
             Players = t.m;
+            Players[0].GameController = this;
+            Players[1].GameController = this;
             curPlayerIndex = 0;
             CurPlayerMadeMove = false;
         }
@@ -66,56 +67,9 @@ namespace CheckersGUI
             curPlayerIndex = 0;
             CurPlayer = Players[curPlayerIndex];
             PieceController.UpdateMoves(CurPlayer);
+            CurPlayer.TakeTurn();
         }
 
-        public void CheckMove(Square start, Square end)
-        {
-            List<Move> possibleMoves = PieceController.PossibleMoves;
-            List<Piece> jumps = PieceController.GetPiecesThatCanJump(CurPlayer);
-            if (jumps.Count != 0)
-            {
-                possibleMoves=ForceJump(jumps);
-            }
-            Move move = null;
-            bool isValid = false;
-
-            foreach (Move m in possibleMoves)
-            {
-                if (m.Piece == start.Piece)
-                {
-                    int endSquareIndex = ViewController.SquareViewIndexFromPosition(m.EndPosition);
-                    Square endSquare = 
-                    ViewController.BoardView.Squares[endSquareIndex].DataContext as Square;
-
-                    if (endSquare == end)
-                    {
-                        // check to see if end matches
-                        isValid = true;
-                        move = m;
-                        break;
-                    }
-                }
-            }
-
-            if (isValid)
-            {
-                MakeMove(move);
-                if (!CheckWin())
-                {
-                    CurPlayer = NextPlayer();
-                    UpdateView();
-                    PieceController.UpdateMoves(CurPlayer);
-                } else
-                {
-                    // we won the game
-                }
-            } else
-            {
-                // update view controller
-                MessageBox.Show("Invalid move!");
-                ViewController.ClearSquares();
-            }
-        }
         public List<Move> ForceJump(List<Piece> jumps)
         {
             List<Move> m = new List<Move>();
@@ -135,6 +89,39 @@ namespace CheckersGUI
             return m;
         }
 
+        public bool IsValidMove(Move move)
+        {
+            List<Move> possibleMoves = PieceController.PossibleMoves;
+
+            bool isValid = possibleMoves.Contains(move);
+            return isValid;
+        }
+
+
+        public Move CheckMove(Square start, Square end)
+        {
+            List<Move> possibleMoves = PieceController.PossibleMoves;
+
+            Move move = null;
+
+            foreach (Move m in possibleMoves)
+            {
+                if (m.Piece == start.Piece)
+                {
+                    int endSquareIndex = ViewController.SquareViewIndexFromPosition(m.EndPosition);
+                    Square endSquare =
+                    ViewController.BoardView.Squares[endSquareIndex].DataContext as Square;
+
+                    if (endSquare == end)
+                    {
+                        // check to see if end matches
+                        move = m;
+                        break;
+                    }
+                }
+            }
+            return move;
+        }
 
         private void UpdateView()
         {
@@ -191,5 +178,23 @@ namespace CheckersGUI
             return curPlayer;
         }
 
+        public void Update()
+        {
+            Move move = CurPlayer.GetMove(PieceController.PossibleMoves);
+            
+            if (IsValidMove(move))
+            {
+                MakeMove(move);
+                UpdateView();
+
+                CurPlayer = NextPlayer();
+                PieceController.UpdateMoves(CurPlayer);
+                CurPlayer.TakeTurn();
+            } else
+            {
+                MessageBox.Show("Invalid move!");
+                ViewController.ClearSquares();
+            }
+        }
     }
 }

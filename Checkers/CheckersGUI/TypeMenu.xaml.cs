@@ -20,7 +20,7 @@ namespace CheckersGUI
     /// </summary>
     public partial class TypeMenu : Window
     {
-        private List<Player> _m=new List<Player> { new HumanPlayer(), new HumanPlayer() };
+        private List<Player> _m=new List<Player> { new GUIHumanPlayer(), new GUIHumanPlayer() };
         public List<Player> m
         {
             get { return _m; }
@@ -33,19 +33,19 @@ namespace CheckersGUI
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            m = new List<Player> { new HumanPlayer(), new HumanPlayer() };
+            m = new List<Player> { new GUIHumanPlayer(), new GUIHumanPlayer() };
             this.Close();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            m = new List<Player> { new HumanPlayer(), new AIPlayer() };
+            m = new List<Player> { new GUIHumanPlayer(), new NewAIPlayer() };
             this.Close();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            m = new List<Player> { new AIPlayer(), new AIPlayer() };
+            m = new List<Player> { new NewAIPlayer(), new NewAIPlayer() };
             this.Close();
         }
     }
