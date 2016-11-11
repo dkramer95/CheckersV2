@@ -45,7 +45,7 @@ namespace CheckersGUI
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            CreateGame();
+            GameController.ResetGame();
         }
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
