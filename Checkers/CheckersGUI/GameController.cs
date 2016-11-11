@@ -78,25 +78,6 @@ namespace CheckersGUI
             CurPlayer.TakeTurn();
         }
 
-        public List<Move> ForceJump(List<Piece> jumps)
-        {
-            List<Move> m = new List<Move>();
-            foreach (Move s in PieceController.PossibleMoves)
-            {
-                foreach (Piece c in jumps)
-                {
-                    if (s.Piece != null)
-                    {
-                        if (s.Piece == c)
-                        {
-                            m.Add(s);
-                        }
-                    }
-                }
-            }
-            return m;
-        }
-
         public bool IsValidMove(Move move)
         {
             List<Move> possibleMoves = PieceController.PossibleMoves;
