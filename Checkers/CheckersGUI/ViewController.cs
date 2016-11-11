@@ -152,11 +152,6 @@ namespace CheckersGUI
             {
                 EndSquare = squareView;
                 GameController.Update();
-
-                // let game controller handle move checking
-                //Square startSquareModel = StartSquare.DataContext as Square;
-                //Square endSquareModel = EndSquare.DataContext as Square;
-                //GameController.CheckMove(startSquareModel, endSquareModel);
             }
         }
     }
