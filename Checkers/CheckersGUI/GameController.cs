@@ -86,11 +86,6 @@ namespace CheckersGUI
         public Move CheckMove(Square start, Square end)
         {
             List<Move> possibleMoves = PieceController.PossibleMoves;
-            List<Piece> jumps = PieceController.GetPiecesThatCanJump(CurPlayer);
-            if (jumps.Count!=0)
-            {
-                possibleMoves = ForceJump(jumps);
-            }
             Move move = null;
 
             foreach (Move m in possibleMoves)
@@ -173,7 +168,6 @@ namespace CheckersGUI
             }
         }
 
-
         private Player NextPlayer()
         {
             if(++curPlayerIndex >= Players.Count)
@@ -184,9 +178,24 @@ namespace CheckersGUI
             return curPlayer;
         }
 
+        private List<Move> GetValidMoves()
+        {
+            List<Move> validMoves = null;
+
+            List<Piece> jumps = PieceController.GetPiecesThatCanJump(CurPlayer);
+            if (jumps.Count != 0)
+            {
+                validMoves = ForceJump(jumps);
+            } else
+            {
+                validMoves = PieceController.PossibleMoves;
+            }
+            return validMoves;
+        }
+
         public void Update()
         {
-            Move move = CurPlayer.GetMove(PieceController.PossibleMoves);
+            Move move = CurPlayer.GetMove(GetValidMoves());
             
             if (IsValidMove(move))
             {
