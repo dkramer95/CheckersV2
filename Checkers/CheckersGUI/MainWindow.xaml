@@ -6,13 +6,9 @@
         xmlns:local="clr-namespace:CheckersGUI"
         mc:Ignorable="d"
         Title="Checkers GUI" Height="700" Width="700" ResizeMode="NoResize">
-    <Window.CommandBindings>
-        <CommandBinding Command="New" Executed="MenuItem_Click"/>
-    </Window.CommandBindings>
     <DockPanel x:Name="mainPanel">
         <Menu Height="20" DockPanel.Dock="Top" >
             <MenuItem Header="File">
-                <MenuItem Command="New"/>
                 <MenuItem Header="Exit" Click="MenuItem_Click_2"/>
             </MenuItem>
         </Menu>
