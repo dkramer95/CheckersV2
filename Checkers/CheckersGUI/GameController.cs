@@ -100,14 +100,14 @@ namespace CheckersGUI
             if (isValid)
             {
                 MakeMove(move);
-                if (!CheckWin())
-                {
+                
                     CurPlayer = NextPlayer();
                     UpdateView();
                     PieceController.UpdateMoves(CurPlayer);
-                } else
+                if (CheckWin())
                 {
-                    // we won the game
+                    CurPlayer = NextPlayer();
+                    MessageBox.Show(CurPlayer.PiecesColor+" Player Wins!");
                 }
             } else
             {
@@ -138,8 +138,12 @@ namespace CheckersGUI
 
         private bool CheckWin()
         {
-            //TODO add win checking here
-            return false;
+            bool win = false;
+            if (PieceController.PossibleMoves.Count == 0)
+            {
+                win = true;
+            }
+            return win;
         }
 
         private void MakeMove(Move m)
