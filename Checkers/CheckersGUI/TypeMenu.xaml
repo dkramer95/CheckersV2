@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CheckersGUI"
         mc:Ignorable="d"
-        Title="Chose A Game Mode" Height="200" Width="300">
+        Title="Chose A Game Mode" Height="300" Width="300">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Button Content="Player vs Player" Click="Button_Click"/>
         <Button Content="Player vs Ai" Click="Button_Click_1" Grid.Row="1"/>
+        <Button Content="Ai vs Ai" Click="Button_Click_1" Grid.Row="2"/>
     </Grid>
 </Window>
