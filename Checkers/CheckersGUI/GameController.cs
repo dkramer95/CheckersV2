@@ -50,6 +50,16 @@ namespace CheckersGUI
             CurPlayerMadeMove = false;
         }
 
+        public void ResetGame()
+        {
+            InitPlayers();
+            InitBoard();
+            InitView();
+            StartGame();
+            UpdateView();
+            Console.WriteLine(Board.ToString());
+        }
+
         private void InitBoard()
         {
             Board.Reset();
@@ -123,6 +133,19 @@ namespace CheckersGUI
             return move;
         }
 
+        public List<Move> ForceJump(List<Piece> jumps)
+        {
+            List<Move> m = new List<Move>();
+            foreach (Move s in PieceController.PossibleMoves)
+            {
+                if (s.CapturedPieces.Count > 0)
+                {
+                    m.Add(s);
+                }
+            }
+            return m;
+        }
+
         private void UpdateView()
         {
             ViewController.UpdateView(Board.GridSquares);
@@ -131,8 +154,12 @@ namespace CheckersGUI
 
         private bool CheckWin()
         {
-            //TODO add win checking here
-            return false;
+            bool win = false;
+            if (PieceController.PossibleMoves.Count == 0)
+            {
+                win = true;
+            }
+            return win;
         }
 
         private void MakeMove(Move m)

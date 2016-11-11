@@ -42,5 +42,15 @@ namespace CheckersGUI
             // add view to this window
             boardPanel.Children.Add(GameController.ViewController.BoardView);
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            GameController.ResetGame();
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
