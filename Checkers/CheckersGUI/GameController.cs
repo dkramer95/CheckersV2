@@ -71,7 +71,11 @@ namespace CheckersGUI
         public void CheckMove(Square start, Square end)
         {
             List<Move> possibleMoves = PieceController.PossibleMoves;
-
+            List<Piece> jumps = PieceController.GetPiecesThatCanJump(CurPlayer);
+            if (jumps.Count != 0)
+            {
+                possibleMoves=ForceJump(jumps);
+            }
             Move move = null;
             bool isValid = false;
 
@@ -112,6 +116,25 @@ namespace CheckersGUI
                 ViewController.ClearSquares();
             }
         }
+        public List<Move> ForceJump(List<Piece> jumps)
+        {
+            List<Move> m = new List<Move>();
+            foreach (Move s in PieceController.PossibleMoves)
+            {
+                foreach (Piece c in jumps)
+                {
+                    if (s.Piece != null)
+                    {
+                        if (s.Piece == c)
+                        {
+                            m.Add(s);
+                        }
+                    }
+                }
+            }
+            return m;
+        }
+
 
         private void UpdateView()
         {
