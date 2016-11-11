@@ -121,15 +121,9 @@ namespace CheckersGUI
             List<Move> m = new List<Move>();
             foreach (Move s in PieceController.PossibleMoves)
             {
-                foreach (Piece c in jumps)
+                if (s.CapturedPieces.Count > 0)
                 {
-                    if (s.Piece != null)
-                    {
-                        if (s.Piece == c)
-                        {
-                            m.Add(s);
-                        }
-                    }
+                    m.Add(s);
                 }
             }
             return m;
