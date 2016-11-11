@@ -9,6 +9,7 @@
     <DockPanel x:Name="mainPanel">
         <Menu Height="20" DockPanel.Dock="Top" >
             <MenuItem Header="File">
+                <MenuItem Header="New Game" Click="MenuItem_Click"/>
                 <MenuItem Header="Exit" Click="MenuItem_Click_2"/>
             </MenuItem>
         </Menu>
