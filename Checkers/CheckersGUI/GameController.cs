@@ -181,7 +181,7 @@ namespace CheckersGUI
             return curPlayer;
         }
 
-        private List<Move> GetValidMoves()
+        public List<Move> GetValidMoves()
         {
             List<Move> validMoves = null;
 
