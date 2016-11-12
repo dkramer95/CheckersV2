@@ -105,7 +105,7 @@ namespace CheckersGUI
         {
             int col = pos.Column - Board.MIN_COL;
             int row = Board.MAX_ROW - pos.Row;
-            int index = Math.Abs((8 * row + col));
+            int index = Math.Abs((Board.MAX_ROW * row + col));
             return index;
         }
 
@@ -119,7 +119,7 @@ namespace CheckersGUI
         {
             foreach(SquareView squareView in BoardView.Squares)
             {
-                squareView.ClearHighlight();
+                squareView.SetNormalColor();
             }
             StartSquare = null;
             EndSquare = null;
@@ -137,7 +137,8 @@ namespace CheckersGUI
                 if (square.HasPiece())
                 {
                     StartSquare = clickedSquare;
-                    StartSquare.ToggleHighlight();
+                    StartSquare.SetHighlightColor();
+                    ShowMovePreviews();
                 }
             }
             else if ((StartSquare == clickedSquare) || (StartSquare != null && EndSquare != null))
@@ -148,6 +149,50 @@ namespace CheckersGUI
             {
                 EndSquare = clickedSquare;
                 GameController.Update();
+            }
+        }
+
+        /// <summary>
+        /// Returns a square (data model) from a position
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        private Square SquareFromPosition(Position pos)
+        {
+            Square square = SquareViewFromPosition(pos).DataContext as Square;
+            return square;
+        }
+
+        /// <summary>
+        /// Returns a square view from a position
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        private SquareView SquareViewFromPosition(Position pos)
+        {
+            int index = SquareViewIndexFromPosition(pos);
+            SquareView squareView = BoardView.Squares[index];
+            return squareView;
+        }
+
+        /// <summary>
+        /// Shows a preview of all the squares you can move to
+        /// </summary>
+        private void ShowMovePreviews()
+        {
+            if (StartSquare != null)
+            {
+                List<Move> validMoves = GameController.GetValidMoves();
+
+                foreach (Move m in validMoves)
+                {
+                    Square moveStartSquare = SquareFromPosition(m.StartPosition);
+                    if (moveStartSquare == StartSquare.DataContext as Square)
+                    {
+                        SquareView moveEndSquare = SquareViewFromPosition(m.EndPosition);
+                        moveEndSquare.SetPreviewColor();
+                    }
+                }
             }
         }
     }
