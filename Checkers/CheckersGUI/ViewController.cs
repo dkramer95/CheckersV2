@@ -50,10 +50,7 @@ namespace CheckersGUI
 
                 if (square.HasPiece())
                 {
-                    Piece piece = square.Piece;
-                    string imgPath = GetImagePathFromPiece(piece);
-                    PieceView pieceView = PieceView.FromPath(imgPath);
-                    BoardView.Squares[viewIndex].SetPieceView(pieceView);
+                    UpdateSquarePiece(square, viewIndex);
                 }
             }
         }
@@ -70,16 +67,26 @@ namespace CheckersGUI
 
                 if (square.HasPiece())
                 {
-                    Piece piece = square.Piece;
-                    string imgPath = GetImagePathFromPiece(piece);
-                    PieceView pieceView = PieceView.FromPath(imgPath);
-                    BoardView.Squares[viewIndex].SetPieceView(pieceView);
+                    UpdateSquarePiece(square, viewIndex);
                 }
                 else
                 {
                     squareView.ClearPieceImage();
                 }
             }
+        }
+
+        /// <summary>
+        /// Updates a square with a piece view representation
+        /// </summary>
+        /// <param name="square">Square model</param>
+        /// <param name="viewIndex">index in boardsquares view</param>
+        private void UpdateSquarePiece(Square square, int viewIndex)
+        {
+            Piece piece = square.Piece;
+            string imgPath = GetImagePathFromPiece(piece);
+            PieceView pieceView = PieceView.FromPath(imgPath);
+            BoardView.Squares[viewIndex].SetPieceView(pieceView);
         }
 
         private string GetImagePathFromPiece(Piece piece)
@@ -96,8 +103,8 @@ namespace CheckersGUI
         /// <returns>index int value</returns>
         public static int SquareViewIndexFromPosition(Position pos)
         {
-            int col = pos.Column - 'A';
-            int row = 8 - pos.Row;
+            int col = pos.Column - Board.MIN_COL;
+            int row = Board.MAX_ROW - pos.Row;
             int index = Math.Abs((8 * row + col));
             return index;
         }
@@ -110,49 +117,36 @@ namespace CheckersGUI
 
         public void ClearSquares()
         {
-            if (StartSquare != null)
+            foreach(SquareView squareView in BoardView.Squares)
             {
-                StartSquare.ClearHighlight();
-                StartSquare = null;
+                squareView.ClearHighlight();
             }
-
-            if (EndSquare != null)
-            {
-                EndSquare.ClearHighlight();
-                EndSquare = null;
-            }
+            StartSquare = null;
+            EndSquare = null;
         }
 
         private void SquareView_Click(object sender, RoutedEventArgs e)
         {
-            SquareView squareView = sender as SquareView;
+            SquareView clickedSquare = sender as SquareView;
 
-            // haven't clicked the initial starting square yet
             if (StartSquare == null)
             {
-                StartSquare = squareView;
-                StartSquare.ToggleHighlight();
-            }
-            // we clicked on the same starting square -- clear out
-            else if (StartSquare == squareView)
-            {
-                StartSquare.ClearHighlight();
-                StartSquare = null;
-                EndSquare = null;
-            } 
-            // both start and end are set, clear them out
-            else if (StartSquare != null && EndSquare != null)
-            {
-                StartSquare.ClearHighlight();
-                StartSquare = null;
+                // Only highlight if it has a piece
+                Square square = clickedSquare.DataContext as Square;
 
-                EndSquare.ClearHighlight();
-                EndSquare = null;
+                if (square.HasPiece())
+                {
+                    StartSquare = clickedSquare;
+                    StartSquare.ToggleHighlight();
+                }
             }
-            // second click for end square
+            else if ((StartSquare == clickedSquare) || (StartSquare != null && EndSquare != null))
+            {
+                ClearSquares();
+            }
             else
             {
-                EndSquare = squareView;
+                EndSquare = clickedSquare;
                 GameController.Update();
             }
         }
