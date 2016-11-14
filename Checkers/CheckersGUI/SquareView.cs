@@ -17,8 +17,7 @@ namespace CheckersGUI
     {
         // styling
         private static readonly Brush HighlightColor = Brushes.LightGreen;
-
-        private bool isHighlighted;
+        private static readonly Brush PreviewColor = Brushes.LightBlue;
 
         public Brush SquareColor { get; set; }
         public PieceView PieceView { get; private set; }
@@ -55,25 +54,26 @@ namespace CheckersGUI
             squareView.Background = squareView.SquareColor;
             return squareView;
         }
-        public void ToggleHighlight()
-        {
-            // toggle flag
-            isHighlighted = isHighlighted ? false : true;
 
-            // update background style
-            Background = isHighlighted ? HighlightColor : SquareColor;
+        public void SetHighlightColor()
+        {
+            Background = HighlightColor;
+        }
+
+        public void SetPreviewColor()
+        {
+            Background = PreviewColor;
+        }
+
+        public void SetNormalColor()
+        {
+            Background = SquareColor;
         }
 
         public void ClearPieceImage()
         {
             PieceView.Background = Brushes.Transparent;
             Content = PieceView;
-        }
-
-        public void ClearHighlight()
-        {
-            isHighlighted = false;
-            Background = SquareColor;
         }
     }
 }
