@@ -20,7 +20,7 @@ namespace CheckersGUI
 
         public override async void TakeTurn()
         {
-            await Task.Delay(10);
+            await Task.Delay(1000);
             GameController.Update();
         }
     }
